@@ -1,3 +1,9 @@
+# editor crap
+*~
+.*.sw?
+.sw?
+\#*\#
+DEADJOE
 blib/
 .build/
 _build/
