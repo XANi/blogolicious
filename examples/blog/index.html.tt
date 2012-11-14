@@ -1,0 +1,12 @@
+<html>
+  <head>
+<title>test</title>
+</head>
+<body>
+<h1>test</h1>
+[% USE Dumper %]
+[% Dumper.dump(c.req.headers) %]
+
+
+</body>
+</html>
