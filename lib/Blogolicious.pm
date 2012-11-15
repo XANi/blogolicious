@@ -1,17 +1,17 @@
 package Blogolicious;
 use Mojo::Base 'Mojolicious';
-our $VERSION = '0.01';
-
 use YAML::XS;
 use File::Slurp qw(read_file);
 use Data::Dumper;
-use Mojolicious::Plugin::TtRenderer;
 use Cwd;
+
+use Blogolicious::Blogpost;
+
+our $VERSION = '0.01';
 
 # This method will run once at server start
 sub startup {
     my $self = shift;
-
     # TODO /dev/urandom!!!
     $self->secret(rand(1000000000000000));
     $self->plugin(PoweredBy => (name => "Blogolicious $VERSION"));
@@ -47,8 +47,8 @@ sub startup {
            opendir (my $posts_dir, $self->app->config('repo_dir') . '/posts/');
            my @posts = grep(/^\d{4}-\d{2}-\d{2}/ ,readdir($posts_dir));
             $self->stash(
-                title     => 'Blog',
-                posts     => \@posts,
+                title     => $self->app->config('title'),
+                posts     => Blogolicious::Blogpost->get_sorted_post_list($self->app->config('repo_dir') . '/posts/'),
                 error     => $self->flash('error'),
             );
            $self->render(template=>'index');

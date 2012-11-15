@@ -1,5 +1,14 @@
 #!/usr/bin/env perl
 use lib '../lib';
+use EV;
+use AnyEvent;
+# Start commands for application
+     my $w = AnyEvent->timer (
+      after    => 1,
+      interval => 1,
+      cb       => sub {print "Any Event working!!!\n";system("date >>/tmp/log");},
+   );
+
 use Mojo::Base -strict;
 
 use File::Basename 'dirname';
@@ -11,6 +20,6 @@ my @base = (splitdir(dirname(__FILE__)), '..');
 my $lib = join('/', @base, 'lib');
 -e catdir(@base, 't') ? unshift(@INC, $lib) : push(@INC, $lib);
 
-# Start commands for application
+
 require Mojolicious::Commands;
 Mojolicious::Commands->start_app('Blogolicious');

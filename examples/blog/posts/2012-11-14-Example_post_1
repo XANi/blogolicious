@@ -7,6 +7,9 @@ author: XANi
 ---
 ## This is just example blogpost
 
+[Main Page](/ "Main")  
+[Mojolicious]  
+
 <pre>
 test
 ing
@@ -29,3 +32,5 @@ down html embedding
 
     markdown code block
     works too
+
+[Mojolicious]: http://mojolicio.us/ "Mojolicious"
