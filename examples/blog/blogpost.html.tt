@@ -1,0 +1,10 @@
+<html>
+  <head>
+<title>[% title %]</title>
+</head>
+<body>
+[% content %]
+
+<h5>Author: [% author %]</h5>
+</body>
+</html>

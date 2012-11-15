@@ -1,0 +1,8 @@
+<html>
+  <head>
+<title>404 File not found</title>
+</head>
+<body>
+Sorry, I could not find [% path %]
+</body>
+</html>

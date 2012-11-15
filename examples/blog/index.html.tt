@@ -1,12 +1,20 @@
 <html>
   <head>
-<title>test</title>
+<title>[% title %]</title>
 </head>
 <body>
-<h1>test</h1>
-[% USE Dumper %]
-[% Dumper.dump(c.req.headers) %]
+[% IF c.stash.error %]
+<h3>[% c.stash.error %]</h3>
+[% END %]
+[% FOREACH post IN posts %]
+<a href=/blog/[% post %]>[% post %]</a><br>
+[% END %]
 
+<h5>Author: [% author %]</h5>
+[% USE Dumper %]
+<!--
+[% Dumper.dump(c) %]
+-->
 
 </body>
 </html>
