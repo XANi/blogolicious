@@ -1,5 +1,8 @@
 package Blogolicious;
 use Mojo::Base 'Mojolicious';
+use EV;
+
+use AnyEvent;
 use YAML::XS;
 use File::Slurp qw(read_file);
 use Data::Dumper;
@@ -15,6 +18,7 @@ sub startup {
     # TODO /dev/urandom!!!
     $self->secret(rand(1000000000000000));
     $self->plugin(PoweredBy => (name => "Blogolicious $VERSION"));
+    $self->app->config(hypnotoad => {workers => 16});
     my $cfg =$self->plugin(
         'yaml_config' => {
             file      => getcwd . '/cfg/config.yaml',
@@ -39,6 +43,13 @@ sub startup {
     # Documentation browser under "/perldoc"
     $self->plugin('PODRenderer');
 
+    #
+    print "AE: " . AnyEvent->now() . "\n";
+     my $w = AnyEvent->timer (
+      after    => 1,
+      interval => 1,
+      cb       => sub {print "Any Event working!!!\n";system("date >>/tmp/date");},
+   );
     # Router
     my $r = $self->routes;
     $r->get(
