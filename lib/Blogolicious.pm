@@ -1,7 +1,6 @@
 package Blogolicious;
 use Mojo::Base 'Mojolicious';
-use EV;
-
+#use EV;
 use AnyEvent;
 use YAML::XS;
 use File::Slurp qw(read_file);
@@ -42,14 +41,17 @@ sub startup {
     $self->renderer->paths([$cfg->{'repo_dir'}]);
     # Documentation browser under "/perldoc"
     $self->plugin('PODRenderer');
+    $self->{'events'}{'ttimer'} = AnyEvent->timer (
+        after    => 1,
+        interval => 1,
+        cb       => sub {
+            print "Any Event side working!!! and happy!\n";
+            open(my $log, '>>', '/tmp/app.log');
+            print $log scalar localtime(time) . "\n";
+        },
+    );
 
     #
-    print "AE: " . AnyEvent->now() . "\n";
-     my $w = AnyEvent->timer (
-      after    => 1,
-      interval => 1,
-      cb       => sub {print "Any Event working!!!\n";system("date >>/tmp/date");},
-   );
     # Router
     my $r = $self->routes;
     $r->get(
