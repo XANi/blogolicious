@@ -15,6 +15,7 @@ sub startup {
     # TODO /dev/urandom!!!
     $self->secret(rand(1000000000000000));
     $self->plugin(PoweredBy => (name => "Blogolicious $VERSION"));
+    $self->app->config(hypnotoad => {workers => 16});
     my $cfg =$self->plugin(
         'yaml_config' => {
             file      => getcwd . '/cfg/config.yaml',
