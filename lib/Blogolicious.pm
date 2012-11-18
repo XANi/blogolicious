@@ -6,6 +6,7 @@ use YAML::XS;
 use File::Slurp qw(read_file);
 use Data::Dumper;
 use Cwd;
+use Module::Load;
 
 use Blogolicious::Blogpost;
 
@@ -40,6 +41,20 @@ sub startup {
     $self->renderer->paths([$cfg->{'repo_dir'}]);
     # Documentation browser under "/perldoc"
     $self->plugin('PODRenderer');
+
+    # helpers
+    $self->plugin('DefaultHelpers');
+
+    # backends
+    #
+    my $post_backend = 'Blogolicious::Backend::Posts::' .  ucfirst($cfg->{'backends'}{'post'}{'module'} || 'File');
+    load $post_backend;
+    $self->{'backend'}{'posts'} = $post_backend->new( dir => $cfg->{'repo_dir'} . '/posts');
+    # TODO move to plugin
+    $self->{'backend'}{'content'} = sub {
+        use Text::Markdown::Discount qw(markdown);
+        markdown(shift);
+    };
     # TODO move refresher to backend module
     # TODO that should be triggered by inotify
     $self->{'events'}{'post_update'} = AnyEvent->timer (
@@ -47,14 +62,14 @@ sub startup {
         interval => 60,
         cb       => sub {
             print "Updating posts\n";
-            $self->{'cache'}{'post_list'} = Blogolicious::Blogpost->get_sorted_post_list($self->app->config('repo_dir') . '/posts/');
-            $self->{'cache'}{'tags'} = Blogolicious::Blogpost->generate_tags( $self->{'cache'}{'post_list'} );
+         #   $self->{'cache'}{'post_list'} = Blogolicious::Blogpost->get_sorted_post_list($self->app->config('repo_dir') . '/posts/');
+          #  $self->{'cache'}{'tags'} = Blogolicious::Blogpost->generate_tags( $self->{'cache'}{'post_list'} );
         },
     );
 
     # pre-generate cache, we want to have it anyway as post list is needed for main page
-    $self->{'cache'}{'post_list'} = Blogolicious::Blogpost->get_sorted_post_list($self->app->config('repo_dir') . '/posts/');
-    $self->{'cache'}{'tags'} = Blogolicious::Blogpost->generate_tags( $self->{'cache'}{'post_list'} );
+    $self->{'cache'}{'post_list'} = $self->{'backend'}{'posts'}->get_sorted_post_list();
+    $self->{'cache'}{'tags'} = $self->{'backend'}{'posts'}->generate_tags( $self->{'cache'}{'post_list'} );
     #
     # Router
     my $r = $self->routes;
@@ -75,5 +90,6 @@ sub startup {
     $r->get('/blog/*blogpost')
        ->to(controller => 'blogpost', action => 'get');
 }
+
 
 1;

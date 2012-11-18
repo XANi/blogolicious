@@ -7,26 +7,6 @@ use Text::Markdown::Discount qw(markdown);
 use YAML::XS;
 use File::Slurp qw(read_file);
 
-sub parse {
-    my $self = shift;
-    my $data = shift;
-    my %opts = @_;
-    my ($comment, $raw_meta, $raw_body) = split(/---/,$data,3);
-    my ($meta, $body);
-    eval {
-        $meta = Load($raw_meta);
-        if ( ! defined($opts{'meta_only'}) ) {
-            if (defined($raw_body)) {$body = markdown($raw_body)};
-        }
-    };
-    # we want arrays to be arrays even if user specifies string
-    if ( defined( $meta->{'tags'} ) && ref($meta->{'tags'}) ne 'ARRAY' ) {
-        $meta->{'tags'} = [ $meta->{'tags'} ];
-    }
-    return ($meta, $body);
-    #    return (, 'n');
-};
-
 sub get {
     my $self = shift;
 
@@ -44,71 +24,21 @@ sub get {
     }
     # TODO ASYNC IO!!!
     my $f = read_file($filename);
-    my ( $meta, $post) = $self->parse($f);
-    if(!defined($meta)) {
+    my ( $post, $content) = $self->app->{'backend'}{'posts'}->parse($f,filename => $self->param('blogpost'));
+    $content = &{$self->app->{'backend'}{'content'}}($content);
+#    my $post->{'title'} = 'test';
+#    my $content = Dumper $self->{'backend'};;
+    if(!defined($post)) {
         $self->render(template => 'error/post_error', status => 404);
         return;
     }
     $self->stash(
-        title     => $meta->{'title'},
-        author    => $meta->{'author'},
-        content   => $post,
+        title   => $post->{'title'},
+        author  => $post->{'author'},
+        post    => $post,
+        content => $content,
     );
     $self->render(template=>'blogpost');
-};
-
-sub get_post_list {
-    my $self = shift;
-    my $path = shift;
-    my $posts = {};
-    opendir (my $posts_dir, $path);
-    my @files = grep(/^\d{4}-\d{2}-\d{2}/ ,readdir($posts_dir));
-    foreach my $filename (@files) {
-        my $file = read_file($path .'/'. $filename);
-        ($posts->{$file}) = $self->parse($file, meta_only => 1);
-        $posts->{$file}{'filename'} = $filename;
-        ($posts->{$file}{'date'}) = $filename =~ m/(\d{4}\-\d{2}\-\d{2})/;
-     }
-    return $posts;
-}
-
-
-sub get_sorted_post_list {
-    my $self = shift;
-    my $path = shift;
-    my $posts = $self->get_post_list($path);
-
-    my $sorted_postnames = [ reverse sort keys $posts ];
-    foreach (@$sorted_postnames) {
-        $_ = $posts->{$_};
-    }
-   return $sorted_postnames;
-};
-
-# TODO: do it while reading post list?
-sub generate_tags {
-    my $self = shift;
-    my $posts = shift;
-    my $tags = {};
-#    use Data::Dumper;
-#    print Dumper $posts;
-    foreach my $post (@$posts) {
-        if (! defined( $post->{'tags'} )
-                || scalar @{ $post->{'tags'} } < 1) {
-            next; # ignore tagless posts
-        }
-        foreach my $tag (@{ $post->{'tags'} }) {
-            if (! defined($tags->{$tag}) ) {
-                $tags->{$tag} = {
-                    count => 0,
-                    posts => [],
-                }
-            }
-            $tags->{$tag}{'count'}++;
-            push @{ $tags->{$tag}{'posts'} }, $post->{'filename'};
-        }
-    }
-    return $tags;
 };
 
 1;
