@@ -25,8 +25,6 @@ sub get {
     # TODO ASYNC IO!!!
     my $f = read_file($filename);
     my ( $post, $content) = $self->app->{'backend'}{'posts'}->parse($f,filename => $self->param('blogpost'));
-#    my $post->{'title'} = 'test';
-#    my $content = Dumper $self->{'backend'};;
     if(!defined($post)) {
         $self->render(template => 'error/post_error', status => 404);
         return;
@@ -34,6 +32,7 @@ sub get {
     $self->stash(
         title   => $post->{'title'},
         author  => $post->{'author'},
+        tags    => $self->app->{'cache'}{'tags'},
         post    => $post,
         content => $content,
     );

@@ -95,5 +95,4 @@ sub startup {
        ->to(controller => 'blogpost', action => 'get');
 }
 
-
 1;
