@@ -1,0 +1,1 @@
+Fix templates so "generic" vars do not have to be passed by stash everytime
