@@ -1,0 +1,15 @@
+</div><!--wrapper-->
+<div id="footer">
+            <div class="left">&copy; Theme "zDark" designed by <a href="http://zww.me">zwwooooo</a></div>
+            <div class="right">
+            <a href="#top" rel="nofollow">Back to Top</a> / <a href="[% h.url_for('/') %]" rel="nofollow">Home</a>
+            </div>
+</div><!--footer-->
+</div><!--container-->
+<?php wp_footer(); ?>
+</body>
+</html>
+[% USE Dumper %]
+<!--
+[% Dumper.dump(c) %]
+-->
