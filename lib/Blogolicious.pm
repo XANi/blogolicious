@@ -49,13 +49,12 @@ sub startup {
             print "Updating posts\n";
             $self->{'cache'}{'post_list'} = Blogolicious::Blogpost->get_sorted_post_list($self->app->config('repo_dir') . '/posts/');
             $self->{'cache'}{'tags'} = Blogolicious::Blogpost->generate_tags( $self->{'cache'}{'post_list'} );
-            #print Dumper $self->{'cache'};
         },
     );
 
     # pre-generate cache, we want to have it anyway as post list is needed for main page
-#    $self->{'cache'}{'post_list'} = Blogolicious::Blogpost->get_sorted_post_list($self->app->config('repo_dir') . '/posts/');
-#    $self->{'cache'}{'tags'} = Blogolicious::Blogpost->generate_tags( $self->{'cache'}{'post_list'} );
+    $self->{'cache'}{'post_list'} = Blogolicious::Blogpost->get_sorted_post_list($self->app->config('repo_dir') . '/posts/');
+    $self->{'cache'}{'tags'} = Blogolicious::Blogpost->generate_tags( $self->{'cache'}{'post_list'} );
     #
     # Router
     my $r = $self->routes;
@@ -64,8 +63,6 @@ sub startup {
            my $self = shift;
            opendir (my $posts_dir, $self->app->config('repo_dir') . '/posts/');
            my @posts = grep(/^\d{4}-\d{2}-\d{2}/ ,readdir($posts_dir));
-#    $self->{'cache'}{'post_list'} = Blogolicious::Blogpost->get_sorted_post_list($self->app->config('repo_dir') . '/posts/');
-           #    $self->{'cache'}{'tags'} = Blogolicious::Blogpost->generate_tags( $self->{'cache'}{'post_list'} );
            $self->stash(
                title => $self->app->config('title'),
                posts => $self->app->{'cache'}{'post_list'},
