@@ -65,8 +65,9 @@ sub startup {
         interval => 60,
         cb       => sub {
             print "Updating posts\n";
-         #   $self->{'cache'}{'post_list'} = Blogolicious::Blogpost->get_sorted_post_list($self->app->config('repo_dir') . '/posts/');
-          #  $self->{'cache'}{'tags'} = Blogolicious::Blogpost->generate_tags( $self->{'cache'}{'post_list'} );
+            $self->{'cache'}{'post_list'} = $self->{'backend'}{'posts'}->get_sorted_post_list();
+            $self->{'cache'}{'tags'} = $self->{'backend'}{'posts'}->generate_tags( $self->{'cache'}{'post_list'} );
+
         },
     );
 

@@ -29,7 +29,7 @@ sub new {
         $self->{'config'}{'renderer'} = sub { return shift; };
     }
     # this is where summary ends
-    $self->{'config'}{'summary_tag'} ||= '-- more --';
+    $self->{'config'}{'summary_tag'} ||= '\n\s*-- more --';
     return $self;
 };
 
@@ -40,10 +40,15 @@ sub parse {
     my %opts = @_;
     my ($comment, $raw_meta, $body) = split(/(?:\n|^)---\n/,$data,3);
     my $meta = {};
+    my $tmp;
     # TODO handle fail condition instead of ignoring
     eval {
         $meta = Load($raw_meta);
-        ($meta->{'summary'},undef) = split(/$self->{'config'}{'summary_tag'}/, $body,2);
+        ($meta->{'summary'},$tmp) = split(/$self->{'config'}{'summary_tag'}/, $body,2);
+        if (defined($tmp) && $tmp !~ /^\s*$/) {
+            $meta->{'has_more'} = 1;
+        }
+        $body = $meta->{'summary'} . $tmp;
         $body = &{ $self->{'config'}{'renderer'} }($body);
         $meta->{'summary'} = &{ $self->{'config'}{'renderer'} }($meta->{'summary'});
     };
