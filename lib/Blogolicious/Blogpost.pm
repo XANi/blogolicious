@@ -19,6 +19,10 @@ sub parse {
             if (defined($raw_body)) {$body = markdown($raw_body)};
         }
     };
+    # we want arrays to be arrays even if user specifies string
+    if ( defined( $meta->{'tags'} ) && ref($meta->{'tags'}) ne 'ARRAY' ) {
+        $meta->{'tags'} = [ $meta->{'tags'} ];
+    }
     return ($meta, $body);
     #    return (, 'n');
 };
@@ -60,11 +64,10 @@ sub get_post_list {
     opendir (my $posts_dir, $path);
     my @files = grep(/^\d{4}-\d{2}-\d{2}/ ,readdir($posts_dir));
     foreach my $filename (@files) {
-         my $file = read_file($path .'/'. $filename);
+        my $file = read_file($path .'/'. $filename);
         ($posts->{$file}) = $self->parse($file, meta_only => 1);
-         $posts->{$file}{'filename'} = $filename;
-         ($posts->{$file}{'date'}) = $filename =~ m/(\d{4}\-\d{2}\-\d{2})/;
-
+        $posts->{$file}{'filename'} = $filename;
+        ($posts->{$file}{'date'}) = $filename =~ m/(\d{4}\-\d{2}\-\d{2})/;
      }
     return $posts;
 }
@@ -81,4 +84,31 @@ sub get_sorted_post_list {
     }
    return $sorted_postnames;
 };
+
+# TODO: do it while reading post list?
+sub generate_tags {
+    my $self = shift;
+    my $posts = shift;
+    my $tags = {};
+#    use Data::Dumper;
+#    print Dumper $posts;
+    foreach my $post (@$posts) {
+        if (! defined( $post->{'tags'} )
+                || scalar @{ $post->{'tags'} } < 1) {
+            next; # ignore tagless posts
+        }
+        foreach my $tag (@{ $post->{'tags'} }) {
+            if (! defined($tags->{$tag}) ) {
+                $tags->{$tag} = {
+                    count => 0,
+                    posts => [],
+                }
+            }
+            $tags->{$tag}{'count'}++;
+            push @{ $tags->{$tag}{'posts'} }, $post->{'filename'};
+        }
+    }
+    return $tags;
+};
+
 1;
