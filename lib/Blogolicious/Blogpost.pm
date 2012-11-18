@@ -25,7 +25,6 @@ sub get {
     # TODO ASYNC IO!!!
     my $f = read_file($filename);
     my ( $post, $content) = $self->app->{'backend'}{'posts'}->parse($f,filename => $self->param('blogpost'));
-    $content = &{$self->app->{'backend'}{'content'}}($content);
 #    my $post->{'title'} = 'test';
 #    my $content = Dumper $self->{'backend'};;
     if(!defined($post)) {

@@ -24,6 +24,12 @@ sub new {
     if (!defined $self->{'config'}{'dir'}) {
         croak("You need to specify dir");
     }
+    if (!defined( $self->{'config'}{'renderer'} ) ) {
+        carp("Renderer not specified, will render as plaintext!");
+        $self->{'config'}{'renderer'} = sub { return shift; };
+    }
+    # this is where summary ends
+    $self->{'config'}{'summary_tag'} ||= '-- more --';
     return $self;
 };
 
@@ -32,20 +38,24 @@ sub parse {
     my $self = shift;
     my $data = shift;
     my %opts = @_;
-    my ($comment, $raw_meta, $body) = split(/---/,$data,3);
-    my $meta;
+    my ($comment, $raw_meta, $body) = split(/(?:\n|^)---\n/,$data,3);
+    my $meta = {};
+    # TODO handle fail condition instead of ignoring
     eval {
         $meta = Load($raw_meta);
+        ($meta->{'summary'},undef) = split(/$self->{'config'}{'summary_tag'}/, $body,2);
+        $body = &{ $self->{'config'}{'renderer'} }($body);
+        $meta->{'summary'} = &{ $self->{'config'}{'renderer'} }($meta->{'summary'});
     };
+    if ($@) { carp($@); }
+
     # we want arrays to be arrays even if user specifies string
     if ( defined( $meta->{'tags'} ) && ref($meta->{'tags'}) ne 'ARRAY' ) {
         $meta->{'tags'} = [ $meta->{'tags'} ];
     }
-
     if ( defined( $opts{'filename'} ) ) {
         $meta->{'filename'} = $opts{'filename'};
         ($meta->{'date'}) = $opts{'filename'} =~ m/(\d{4}\-\d{2}\-\d{2})/;
-
     }
     return ($meta, $body);
 };
@@ -69,6 +79,7 @@ sub get_post_list {
     foreach my $filename (@files) {
         my ($meta, $body) = $self->load_and_parse($filename, meta_only => 1);
         $posts->{$filename} = $meta;
+#        if (defined( $self->{'config'}{'renderer'} ) ) {
      }
     return $posts;
 }

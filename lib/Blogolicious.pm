@@ -47,14 +47,17 @@ sub startup {
 
     # backends
     #
-    my $post_backend = 'Blogolicious::Backend::Posts::' .  ucfirst($cfg->{'backends'}{'post'}{'module'} || 'File');
-    load $post_backend;
-    $self->{'backend'}{'posts'} = $post_backend->new( dir => $cfg->{'repo_dir'} . '/posts');
     # TODO move to plugin
     $self->{'backend'}{'content'} = sub {
         use Text::Markdown::Discount qw(markdown);
         markdown(shift);
     };
+    my $post_backend = 'Blogolicious::Backend::Posts::' .  ucfirst($cfg->{'backends'}{'post'}{'module'} || 'File');
+    load $post_backend;
+    $self->{'backend'}{'posts'} = $post_backend->new(
+        dir => $cfg->{'repo_dir'} . '/posts',
+        renderer => $self->{'backend'}{'content'},
+    );
     # TODO move refresher to backend module
     # TODO that should be triggered by inotify
     $self->{'events'}{'post_update'} = AnyEvent->timer (
