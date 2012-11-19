@@ -4,6 +4,8 @@
 .sw?
 \#*\#
 DEADJOE
+*.orig
+#
 blib/
 .build/
 _build/
@@ -23,3 +25,4 @@ pm_to_blib
 # mojolicious
 log/*
 tmp/*
+cfg/config.yaml

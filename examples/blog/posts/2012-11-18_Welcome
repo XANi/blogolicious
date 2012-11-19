@@ -1,0 +1,22 @@
+Part to first --- mark is ignored by parser so can use it as comment
+---
+title: Welcome to your blog!
+author: Blogolicious
+tags:
+  - Tag1
+  - testtag2
+category:
+  - Some random category
+---
+
+### Welcome in your blog!
+By default it uses [Markdown Syntax](http://daringfireball.net/projects/markdown/syntax) in post body, and YAML to set blog metadata
+
+This software is based on awesome [Mojolicious](http://mojolicio.us/) framework
+
+if you use -- more -- in newline, part before will be considered summary and -- more -- will be removed from post, like that:
+ -- more --
+
+Yep just like that
+
+have fun

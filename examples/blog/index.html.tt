@@ -1,20 +1,31 @@
-<html>
-  <head>
-<title>[% title %]</title>
-</head>
-<body>
-[% IF c.stash.error %]
-<h3>[% c.stash.error %]</h3>
-[% END %]
-[% FOREACH post IN posts %]
-<a href=/blog/[% post %]>[% post %]</a><br>
-[% END %]
+[% INCLUDE layout/header.tt %]
+<div id="content">
+        [% FOREACH post IN posts %]
+        <div class="post">
+                <div class="date">
+                  [% post.date.replace('(\d{4})\-', '$1 ').replace('-','.') %]
+                </div>
+                <div class="postinfo">
+                  [%- # TODO generate permalinks!!! -%]
+                        <h2><a href="/blog/[% post.filename %]">[% post.title %]</a></h2>
+                </div>
+                <div class="commentslink1-top">
+                [% IF post.category %]
+                |  In [% post.category.join(', ') %]
+                [% END %]
+                [% IF post.tags %]
+                |  Tags: [% post.tags.join(', ') %]
+                [% END %]
+                </div>
+                <div class="postcontent">
+                  [% post.summary %]
+                  [% IF post.has_more %]<a href="/blog/[% post.filename %]" class="more-link">(more…)</a>[% END %]
+                 </div>
+                <div class="commentslink1-bottom">.: Comment count here :.</div>
+        </div>
+        [% END %]
+        <div id="pagination">.: &lt;--prev TBD next--&gt;</div>
+</div><!--content-->
 
-<h5>Author: [% author %]</h5>
-[% USE Dumper %]
-<!--
-[% Dumper.dump(c) %]
--->
-
-</body>
-</html>
+[% INCLUDE layout/sidebar.tt %]
+[% INCLUDE layout/footer.tt %]

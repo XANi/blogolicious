@@ -1,0 +1,25 @@
+<div id="sidebar">
+        [% # put widgets here %]
+        <li class="widget">
+                <h2>Test widget 1</h2>
+                <ul>
+                    Widget 1 text
+                </ul>
+        </li>
+        <li class="widget">
+                <h2>Test widget 2</h2>
+                <ul>
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                </ul>
+        </li>
+        <li class="widget Tag-Cloud">
+                <h2>Tag Cloud</h2>
+                [% FOREACH tag IN tags.keys %][% tag %] | [% END %]
+        </li>
+        <li class="widget widget_links">
+                <h2>Links</h2>
+                <ul>
+                get all the links
+                </ul>
+        </li>
+</div>x
