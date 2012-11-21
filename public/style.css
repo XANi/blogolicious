@@ -1,0 +1,166 @@
+/*
+Theme Name: Maze
+Theme URI: http://iwp.me/maze/
+Description:  a simple theme looks like a maze, widget ready and there is a setting page on the dashboard.
+Version: 1.2
+Author: Chada Chou
+Author URI: http://iwp.me/
+Tags: black, custom admin panel, valid XHTML, two columns, widgets
+*/
+
+/***********basic style*************/
+* {margin: 0; padding: 0; outline: none;}
+a {text-decoration: none;color: #EEEEEC;}
+a:hover {text-decoration: none;color: #ccc;}
+a img{border:none;}
+body {color: #939393; background-color:#1B1B1B;font-family: Verdana, Helvetica, Arial, Geneva, Helvetica, sans-serif;font-size:12px;font-weight:normal;padding-top: 0px;}
+p {padding-bottom: 10px;}
+li {list-style: none;padding-bottom: 3px;}
+ul {padding: 6px 6px 10px 6px;}
+ul li{list-style: none;}
+h1 {font-family: Verdana, Helvetica, Arial, Geneva, Helvetica, sans-serif;font-size:22px;font-weight:normal;color: #CCC;}
+h1 a, h1 a:hover, h1 a:visited {color: #CCC;text-decoration: none;}
+h2 {font-weight: normal;font-size: 14px;}
+h3 {font-family: Verdana, Helvetica, Arial, Geneva, Helvetica, sans-serif;font-size:18px;font-weight:normal;color: #CCC;}
+h4 {font-weight: normal;font-size: 12px;}
+code{ background-color:#262626; border:#F0F0F0 solid 1px;border-left:#F0F0F0 solid 4px; display:block;padding:2px 10px 2px 10px;margin:5px 30px 10px 10px;}
+blockquote{background-color:#262626;padding:5px 5px 5px 20px;margin:5px 30px 10px 10px;}
+blockquote cite{display:block;margin:5px 0 0;}
+.more-link {float: right;padding: 4px 6px 4px 6px;margin:0 1px 11px 0;color:#CCC}
+.alignright {float: right;}
+.alignleft {float: left}
+.aligncenter, div.aligncenter {display: block;margin-left: auto;margin-right: auto;}
+
+/***********structure style*********/
+#page {width: 960px;margin-left: auto;margin-right: auto;border-left: solid 2px #1F92C9;border-right: solid 2px #1F92C9;}
+#container {background:#1B1B1B;position: absolute;min-height: 100%;height: auto;width: 960px;}
+#header {width: 960px;height:70px;}
+#box{ clear:both;}
+#content {width: 580px;float: left;padding:0 5px 0 0px;text-align: justify;}
+#sidebar {width: 360px;float: right; margin-right:0px;}
+#footer {width:960px;height: 40px;margin-top:10px;text-align: right;color: #CCC;font-size: 12px;clear: both;}
+#title{float:left;margin-left:10px;}
+#title h1{font-size:36px;}
+#title h2{font-size:12px;}
+
+/***********topmenu style**********/
+#topmenu{font-size:11px;height:27px;margin:0px; padding:5px 0 0 15px;}
+#feed{float:right; list-style: none; margin: 0px; padding: 0px;}
+
+/***********menu style*********/
+#menu{width: 960px;height: 25px;padding-top: 4px;margin-bottom:0px;}
+#menu li {display: inline;font-weight:bold;}
+#menu a {font-size: 14px;color: #FFF;}
+#menu ul li a {padding: 2px 12px 2px 12px;font-weight:bold;color:#CCC;text-decoration: none;background:#333;letter-spacing:0px;}
+#menu ul li a:hover, #menu ul li a:active, #menu ul li.current_page_item a {padding: 2px 12px 2px 12px;background: #262626;color: #CCC;	}
+
+/************Search Form Style********/
+#searchform{height:20px;line-height:20px;float:left;padding:2px 0;margin:2px 0;}
+#searchform #s{font-size:12px;width:300px;height:16px;margin-left:10px; padding:3px;}
+
+/************content style***********/
+#content li {list-style:none;margin-left: 10px;}
+.post {border: #262626 8px solid;background:#333;width:560px;margin-bottom:5px;padding: 15px 15px 15px 0;}
+.post a:hover {color:#ccc; text-decoration:underline;}
+.post h2{font-size:20px; font-weight:bold; background:#262626;margin:0 30px 10px 0;padding:5px 0 5px 15px;}
+.post h2 a{color:#CCC;}
+.post h2 a:hover {color: #FFF; text-decoration:none;}
+.arch {border: #262626 8px solid; background:#333;width:565px;margin:0;padding: 5px; border-bottom:0;}
+.arch h2{font-size:20px; color:#CCC;}
+
+.pagetitle{padding-left:15px;}
+
+.descr {font-size: 11px;margin:10px 0 10px 15px;text-align: left;}
+.descr a {text-decoration: none;color: #EEEEEC;}
+.descr a:hover {text-decoration: none; color:#EEEEEC; text-decoration:underline;}
+
+.entry {margin-left:15px; font-size:12px; line-height:14px;}
+.entry ul{list-style: none;margin: 0px;padding: 0;}
+.entry img{margin:5px;}
+.post_subscri{border: 1px solid rgb(153, 153, 153); padding: 5px; margin-top: 5px; background-color: rgb(255, 248, 175);font-size:12px;}
+.post_subscri img{ float:left; margin-top:-16px;}
+.meta{ background:#262626; font-size:12px; margin-top:5px; padding:5px;padding-left:15px;}
+.meta a{color:#999999;}
+.prew_next{background:#262626;font-size:12px;padding:5px;display: block;margin: 0 -15px 7px 0;text-align: left;height:16px;}
+.prev{font-size:11px;float:left;padding:0;color:#000;}
+.next{font-size:11px;float:right;padding:0;color:#000;}
+.prev-page{float:left;}
+.next-page{float:right;}
+
+/*************sidebar style**************/
+#s_top {background:#333;width: 360px;float: right;position: relative;padding-bottom: 6px;border:none;}
+#s_top h2{background:#1B1B1B;font-family: Arial, Helvetica, sans-serif;font-size:12px;font-weight:bold;color:#ccc;padding:5px 8px 5px 10px;display: block;margin: 10px 160px 10px 0;text-align: left;height:12px;}
+
+#rss_box h2{ background:#262626;font-size:16px;font-weight:bold;color:#ccc;padding-bottom:5px;display: block;margin: 5px 0 5px 0;text-align: left;height:12px;}
+#rss_box ul{margin-bottom:0px;}
+#rss_box li {float: left;width: 100px;height:17px;margin: 0 2px 0 0;padding: 2px 0 0 0px;white-space:nowrap;overflow:hidden;}
+#bookmark{ width:310px;float: left; margin:0 5px;padding:5px;}
+#bookmark li{ display:inline;}
+
+.b_items {width: 350px;float: left;position: relative;text-align: left;padding-top: 10px;color: #7e7e7e;}
+.b_items a {color: #EEEEEC;}
+.b_items a:hover {color: #8d8d8d;text-decoration: none;}
+.b_items ul{list-style: none;margin: 0px;padding:0;}
+.b_items ul li{list-style: square;margin: 0 10px 0 25px;padding: 4px 0px 4px 0px;font-size: 12px;}
+.b_items ul li a{margin: 0px;padding: 0 0 2px 0px;color: #666666;text-decoration: none;height:12px;}
+.b_items h2{background:#1B1B1B;font-family: Arial, Helvetica, sans-serif;font-size:12px;font-weight:bold;color:#ccc;padding:5px 8px 5px 10px;display: block;margin: 0 160px 7px 0;text-align: left;height:12px;}
+
+#s_cate ul li{list-style:square;float: left;width: 130px;height:12px;margin: 0 2px 0 25px;padding: 2px 0 0 5px;}
+#tag_cloud{margin:10px;}
+#about_box{height:120px;padding:0 10px;}
+#about_box img{margin:0 5px 5px 0; float:left; width:49px; height:49px;border:1px solid #eee;padding:2px;background:#262626;}
+#about_box h2{margin-left:-10px;}
+#side_ad{ text-align:center;}
+
+#left {width: 182px;float: left;position: relative;margin:6px 0 10px 0; padding:10px 0 0 0;}
+#right {width: 168px;float: right;position: relative;margin:6px 0 10px 0px; padding:10px 0 0 0;}
+#left, #right {font-size:10px;padding-bottom:10px;text-align: left;background:#333;}
+#left a, #right a {color: #8D8D8E;}
+#left a:hover, #right a:hover {color: #EEEEEC;text-decoration: none;}
+#left h2, #right h2{background:#1B1B1B; font-family: Arial, Helvetica, sans-serif; font-size:12px;font-weight:bold;color:#CCC;padding:5px 10px;display: block;margin: 0 10px 7px 0;text-align: left;height:12px;}
+#left ul, #right ul{list-style: none;margin: 10px 0 0 0;padding: 0;}
+#left ul li, #right ul li{list-style: none;margin: 0 10px 0 10px;padding: 4px 0px 4px 0;font-size: 12px;}
+
+/***********footer style********/
+#footer a {color: #FFFFFF;}
+#footer a:hover {color: #fff;text-decoration: none;}
+#copyright {float: right;padding-top: 8px;padding-right: 5px;clear:both;}
+
+/*************comments style********/
+.commentlist{padding:0; margin:0px;text-align:left;}
+.commentlist li{margin:6px 0 3px 10px;padding:5px 10px 3px 10px;list-style:none; border:#262626 solid 1px; overflow:hidden;}
+.commentlist li .avatar{float:right;border:1px solid #eee;padding:2px;background:#262626;}
+.commentlist cite,.commentlist cite a{font-weight:bold;font-style:normal;font-size:1.1em;}
+.commentlist p{margin:10px 5px 0 0;font-weight:normal;line-height:1.5em;text-transform:none;}
+.commentmetadata{margin:0;display:block;font-weight:normal;}
+.nocomments{text-align:center;margin:0;padding:0;}
+.alt{margin:0;padding:10px; background-color:#262626; border:#FFF solid 1px;}
+.commentlist li.authorcomment {margin:6px 0 3px 10px;padding:5px 10px 3px 10px;list-style:none; background-color:#262626;border:#CCC solid 1px; overflow:hidden;}
+#trackback {margin:6px 0 0 0;margin-left:10px;}
+#trackback h3{font: 18px Arial, Helvetica, sans-serif;font-weight:bold;color:#CCC;text-align: left;}
+#trackback ul li{list-style:square; border:none;margin-left: 10px;padding: 0 0 2px 0;}
+#comments{ margin:10px 0 0 10px; font: 18px Arial, Helvetica, sans-serif; font-weight:bold;color:#CCC;text-align: left;}
+.add_reply{height:15px;}
+.yus_reply{ float:left;padding:0;}
+.commentcount {font-family:  Georgia,sans-serif; font-size: 12px; font-weight: bold; color: #e0e0d0; float: right; padding:0 5px 0 0;}
+#commentform p{ margin:1px 0 1px 10px;font-family: 'Lucida Grande', Verdana, Arial, Sans-Serif;}
+#commentform input{width:170px;padding:2px;margin:2px 5px 1px 0px;}
+#commentform textarea{width:450px; margin-bottom:5px; margin-left:0px;padding:10px;}
+#commentform #submit{height:24px; width:60px;margin:0 90px 10px 0;float:right;font-weight:bold;}
+#respond{margin:6px 0 0 10px; color:#CCC;}
+
+.slected {font-size: 12px;background:#262626;border: 1px solid #2F2F2F;color:#CCC;}
+.slected:hover {background: #333;}
+.slected:focus {background: #1B1B1B;}
+
+/*************tabs style************/
+#tabs{padding:5px 0 0 10px;}
+#tab-content {float:left;margin:0px 0 1px 0;width:340px;}
+
+
+
+
+/************links page style************/
+#content .change ul li  a{font-size: 1.0em;font-family: Verdana, Arial, Helvetica, sans-serif;margin: 0px;padding-top: 2px;color: #666666;text-decoration: none;border-left:8px solid #EEEEEC;height:16px;display:block;}
+#content .change ul li  a:hover{border-left:8px solid #000000;}
+#content .change ul li {float: left;width:160px;margin: 2px 2px 0 0;padding: 0px;white-space:nowrap;	overflow:hidden;}

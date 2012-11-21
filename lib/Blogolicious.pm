@@ -18,7 +18,7 @@ sub startup {
     # TODO /dev/urandom!!!
     $self->secret(rand(1000000000000000));
     $self->plugin(PoweredBy => (name => "Blogolicious $VERSION"));
-    $self->app->config(hypnotoad => {workers => 16});
+    $self->app->config(hypnotoad => {workers => 8});
     my $cfg =$self->plugin(
         'yaml_config' => {
             file      => getcwd . '/cfg/config.yaml',
@@ -32,7 +32,7 @@ sub startup {
                 INCLUDE_PATH => $cfg->{'repo_dir'},
                 COMPILE_DIR => $cfg->{'tmp_dir'} . '/tt_cache',
                 COMPILE_EXT => '.ttc',
-                 EVAL_PERL => 0,
+                EVAL_PERL => 0,
                 CACHE_SIZE =>0, # 0 means no cache
             }
         }

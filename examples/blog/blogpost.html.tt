@@ -1,32 +1,30 @@
 [% INCLUDE layout/header.tt %]
 <div id="content">
-    <?php if (have_posts()) : while (have_posts()) : the_post(); ?>
     <div class="post">
-        <div class="postinfo" id="commentslink2-bottom">
-            <div class="date">
-                [% post.date.replace('(\d{4})\-', '$1 ').replace('-','.') %]
-            </div>
-            <div class="single-title">
-                <h2><a href="[% h.url_for(post.filename) %]">[% post.title %]</a></h2>
-            </div>
-            <div class="commentslink1-top">
-                [% IF post.category %]
-                |  In [% post.category.join(', ') %]
-                [% END %]
-                [% IF post.tags %]
-                |  Tags: [% post.tags.join(', ') %]
-                [% END %]
-            </div>
-            <div class="postcontent">
-                [% content %]
-            </div>
-            <div id="add-info">
-                [% # TODO Plugins here %]
-                </div>
-        </div>
-        <h5>Author: [% author %]</h5>
+    <h2>[% post.title %]</h2>
+    <div class="descr">
+        Posted by [% post.author %][% IF post.category %] under [% post.category.join(', ') %][% END %] on [% post.date %]
     </div>
-</div><!--content-->
+    <div class="entry">
+        [% content %]
+    </div>
+    <div class="meta">
+        [% IF post.tags %]
+        Tags: [% post.tags.join(', ') %]
+        [% END %]<br/>
+        If you enjoy this article, make sure you <a href="/rss"><b>subscribe to my RSS Feed</b></a>.
+    </div>
+    <!--Comments start-->
+    <div class="comments_part">
+        [% INCLUDE layout/comments.tt %]
+    </div>
+      <!--Comments end-->
+    <div class="prew_next">
+    <span style="float:left;">Previous post</span>
+    <span style="float:right;">Next post</span>
+    </div>
+    </div>
+</div>
 
 [% INCLUDE layout/sidebar.tt %]
 [% INCLUDE layout/footer.tt %]
