@@ -1,55 +1,57 @@
 <div id="sidebar">
-<div id="s_top">
-<h2>Tag Cloud</h2>
-[% FOREACH tag IN tags.keys %][% tag %] | [% END %]
+    <div id="s_top">
+        <h2>Tag Cloud</h2>
+        [% FOREACH tag IN tags.keys %][% tag %] | [% END %]
 
 
-<div class="b_items">
-   <h2>SEARCH FORM</h2>
-   <div class="slected">Search form here</div>
+        <div class="b_items">
+            <h2>SEARCH FORM</h2>
+            <div class="slected">Search form here</div>
+        </div>
+
+        <div id="s_cate"  class="b_items">
+            <h2>CATEGORIES</h2>
+            <ul>
+                <li> Category list </li>
+                <li> here </li>
+            </ul>
+        </div>
+
+        <div class="b_items" >
+            <h2>another plugin</h2>
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+        </div>
+
+        <div class="b_items">
+            <div id="leftandright">
+
+                <div id="left">
+
+                    <h2>Archives</h2>
+                    <ul>
+                    </ul>
+
+                    <h2>Meta</h2>
+                    <ul>
+                        <li><a href="http://validator.w3.org/check?uri=referer">Valid XHTML 1.0</a></li>
+                        <li><a href="http://jigsaw.w3.org/css-validator/">Valid CSS!</a></li>
+                        <li><a href="http://gmpg.org/xfn/"><abbr title="XHTML Friends Network">XFN</abbr></a></li>
+                        <li><a href="http://wordpress.org/" title="Powered by WordPress, state-of-the-art semantic personal publishing platform.">Powered by WordPress</a></li>
+                    </ul>
+
+                </div>
+
+                <div id="right">
+
+                    <h2>BLOGROLL</h2>
+                    <ul>
+                        <li>blog 1
+                            <li>blog 2
+                    </ul>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
 </div>
-
-<div id="s_cate"  class="b_items">
-   <h2>CATEGORIES</h2>
-   <ul>
-       <li> Category list
-       <li> here
-   </ul>
-</div>
-
-<div class="b_items" >
-   <h2>another plugin</h2>
-               Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-</div>
-
-<div class="b_items">
-<div id="leftandright"><!--begin left and right-->
-
-<div id="left">
-
-<h2>Archives</h2>
-        <ul>
-        </ul>
-
-<h2>Meta</h2>
-        <ul>
-            <li><a href="http://validator.w3.org/check?uri=referer">Valid XHTML 1.0</a></li>
-            <li><a href="http://jigsaw.w3.org/css-validator/">Valid CSS!</a></li>
-            <li><a href="http://gmpg.org/xfn/"><abbr title="XHTML Friends Network">XFN</abbr></a></li>
-            <li><a href="http://wordpress.org/" title="Powered by WordPress, state-of-the-art semantic personal publishing platform.">Powered by WordPress</a></li>
-        </ul>
-
-</div>
-
-<div id="right">
-
-<h2>BLOGROLL</h2>
-    <ul>
-    <li>blog 1
-    <li>blog 2
-    </ul>
-
-</div>
-
-</div><!--end left and right-->
-</div><!--end of sidebar-->

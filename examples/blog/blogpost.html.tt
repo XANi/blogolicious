@@ -1,28 +1,28 @@
 [% INCLUDE layout/header.tt %]
 <div id="content">
     <div class="post">
-    <h2>[% post.title %]</h2>
-    <div class="descr">
-        Posted by [% post.author %][% IF post.category %] under [% post.category.join(', ') %][% END %] on [% post.date %]
-    </div>
-    <div class="entry">
-        [% content %]
-    </div>
-    <div class="meta">
-        [% IF post.tags %]
-        Tags: [% post.tags.join(', ') %]
-        [% END %]<br/>
-        If you enjoy this article, make sure you <a href="/rss"><b>subscribe to my RSS Feed</b></a>.
-    </div>
-    <!--Comments start-->
-    <div class="comments_part">
-        [% INCLUDE layout/comments.tt %]
-    </div>
-      <!--Comments end-->
-    <div class="prew_next">
-    <span style="float:left;">Previous post</span>
-    <span style="float:right;">Next post</span>
-    </div>
+        <h2>[% post.title %]</h2>
+        <div class="descr">
+            Posted by [% post.author %][% IF post.category %] under [% post.category.join(', ') %][% END %] on [% post.date %]
+        </div>
+        <div class="entry">
+            [% content %]
+        </div>
+        <div class="meta">
+            [% IF post.tags %]
+            Tags: [% post.tags.join(', ') %]
+            [% END %]<br/>
+            If you enjoy this article, make sure you <a href="/rss"><b>subscribe to my RSS Feed</b></a>.
+        </div>
+        <!--Comments start-->
+        <div class="comments_part">
+            [% INCLUDE layout/comments.tt %]
+        </div>
+        <!--Comments end-->
+        <div class="prew_next">
+            <span style="float:left;">Previous post</span>
+            <span style="float:right;">Next post</span>
+        </div>
     </div>
 </div>
 
