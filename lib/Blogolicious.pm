@@ -7,6 +7,7 @@ use File::Slurp qw(read_file);
 use Data::Dumper;
 use Cwd;
 use Module::Load;
+use Carp qw(carp croak);
 
 use Blogolicious::Blogpost;
 
@@ -19,11 +20,9 @@ sub startup {
     $self->secret(rand(1000000000000000));
     $self->plugin(PoweredBy => (name => "Blogolicious $VERSION"));
     $self->app->config(hypnotoad => {workers => 16});
-    my $cfg =$self->plugin(
-        'yaml_config' => {
-            file      => getcwd . '/cfg/config.yaml',
-            class     => 'YAML::XS'
-    });
+    my $cfg = read_file(getcwd . '/cfg/config.yaml') or croak($!);
+    $cfg = Load($cfg) or croak($!);
+    $self->app->config($cfg);
     print "\n----- started: " . scalar localtime(time()) . "----\n";
     print "Config:\n" . Dump($self->app->config);
     $self->plugin(
