@@ -22,7 +22,6 @@ sub startup {
     my $cfg = read_file(getcwd . '/cfg/config.yaml') or croak($!);
     $cfg = Load($cfg) or croak($!);
     $self->app->config($cfg);
-    $self->app->config(hypnotoad => {workers => 8});
     print "\n----- started: " . scalar localtime(time()) . "----\n";
     print "Config:\n" . Dump($self->app->config);
     $self->plugin(

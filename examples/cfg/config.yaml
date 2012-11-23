@@ -10,3 +10,7 @@ backends:
     cfg:
       dir: posts/
 
+
+# if you want to put it into production with hypnotoad, 2 x num_of_cores is good starting point
+hypnotoad:
+  workers: 8
