@@ -5,6 +5,7 @@ package {[
           'libjson-xs-perl',
           'libyaml-libyaml-perl',
           'libtemplate-perl',
+          'libev-perl', # fastest ev backend
 
           ]:
               ensure => installed,
