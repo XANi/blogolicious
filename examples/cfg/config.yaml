@@ -2,7 +2,6 @@
 title: Blogolicious test blog!
 description: just another blog
 tmp_dir:  /path/to/blog/files/tmp
-#repo_dir: /path/to/blog/files/testblog
 repo_dir: /path/to/blog/files/examples/blog
 
 backends:
