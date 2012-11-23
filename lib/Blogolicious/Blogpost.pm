@@ -29,12 +29,38 @@ sub get {
         $self->render(template => 'error/post_error', status => 404);
         return;
     }
+    # placeholder for comment handling so we can at least test templates
+    my $comments = [
+        {
+            author  => 'random hacker 1',
+            date    => '2012-01-02',
+            email   => 'some@e.mail',
+            url     => 'http://poster.url',
+            content => ' kjsdkas fiewhf er8hwer7h ddsfhsd',
+        },
+        {
+            author  => 'random hacker 2',
+            date    => '2012-01-03',
+            email   => 'some@e.mail',
+            url     => 'http://poster.url',
+            content => ' kjsdkas fiewhf er8hwer7h ddsfhsd',
+        },
+        {
+            author  => 'random hacker 3',
+            date    => '2012-01-04',
+            email   => 'some@e.mail',
+            url     => 'http://poster.url',
+            content => ' kjsdkas fiewhf er8hwer7h ddsfhsd',
+        },
+    ];
+
     $self->stash(
-        title   => $post->{'title'},
-        author  => $post->{'author'},
-        tags    => $self->app->{'cache'}{'tags'},
-        post    => $post,
-        content => $content,
+        title    => $post->{'title'},
+        author   => $post->{'author'},
+        tags     => $self->app->{'cache'}{'tags'},
+        post     => $post,
+        content  => $content,
+        comments => $comments,
     );
     $self->render(template=>'blogpost');
 };

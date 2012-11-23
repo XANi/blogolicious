@@ -19,10 +19,10 @@ sub startup {
     # TODO /dev/urandom!!!
     $self->secret(rand(1000000000000000));
     $self->plugin(PoweredBy => (name => "Blogolicious $VERSION"));
-    $self->app->config(hypnotoad => {workers => 16});
     my $cfg = read_file(getcwd . '/cfg/config.yaml') or croak($!);
     $cfg = Load($cfg) or croak($!);
     $self->app->config($cfg);
+    $self->app->config(hypnotoad => {workers => 8});
     print "\n----- started: " . scalar localtime(time()) . "----\n";
     print "Config:\n" . Dump($self->app->config);
     $self->plugin(
@@ -31,7 +31,7 @@ sub startup {
                 INCLUDE_PATH => $cfg->{'repo_dir'},
                 COMPILE_DIR => $cfg->{'tmp_dir'} . '/tt_cache',
                 COMPILE_EXT => '.ttc',
-                 EVAL_PERL => 0,
+                EVAL_PERL => 0,
                 CACHE_SIZE =>0, # 0 means no cache
             }
         }

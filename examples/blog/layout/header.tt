@@ -4,32 +4,32 @@
 <meta name="generator" content="Blogolicious" />
 <meta name="keywords" content="[% # FIXME %]" />
 <meta name="description" content="[% # FIXME %]" />
+<script src="/js/TabbedPanels.js" type="text/javascript"></script>
 <link rel="stylesheet" type="text/css" media="screen" href="/style.css" />
 <!-- <link rel="alternate" type="application/rss+xml" title="RSS 2.0" href="[% # fixme RSS # %]" /> -->
 <!-- <link rel="pingback" href="[% # fixme pingback plugin %]" /> -->
 </head>
+
+
 <body>
-<div id="container">
-<a name="top"></a>
-<div id="header">
-    <div id="header-title">
-        <h1>||||<a href="/">[% c.config.title %]</a></h1>
-        <h2>[% c.config.description %]</h2>
-    </div>
-    <div id="header-rss-logo1"></div>
-    <div id="header-rss-logo2"></div>
-    <div id="header-rss-logo3"></div>
-    <div id="header-rss">
-            <a href="/fixme/rss" rel="nofollow" title="RSS Feed" alt="RSS Feed">RSS Feed</a>
-    </div>
-    <div id="header-menus">
-        <div id="header-menus-page">
-        <ul>
-                <li>FIXME menu 1
-                <li>FIXME menu 2
-        </ul>
-        </div>
-        <div id="search">PLACEHOLDER SEARCH</div>
-    </div>
-</div>
-<div id="wrapper">
+    <div id="page">
+        <div id="container">
+            <div id="topmenu">
+                <div id="feed">
+                    <a href="/rss">RSS</a>
+                </div>
+            </div>
+            <div id="header">
+                <div id="title">
+                    <h1><a href="<?php echo get_settings('home'); ?>/">[% c.config.title %]</a></h1>
+                    <h2>[% c.config.description %]</h2>
+                </div>
+            </div>
+            <div id="menu">
+                <ul>
+                    <li>Home
+                    <li>Page 1
+                    <li>Page 2
+                </ul>
+            </div>
+

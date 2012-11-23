@@ -1,31 +1,30 @@
 [% INCLUDE layout/header.tt %]
 <div id="content">
-        [% FOREACH post IN posts %]
-        <div class="post">
-                <div class="date">
-                  [% post.date.replace('(\d{4})\-', '$1 ').replace('-','.') %]
-                </div>
-                <div class="postinfo">
-                  [%- # TODO generate permalinks!!! -%]
-                        <h2><a href="/blog/[% post.filename %]">[% post.title %]</a></h2>
-                </div>
-                <div class="commentslink1-top">
-                [% IF post.category %]
-                |  In [% post.category.join(', ') %]
-                [% END %]
-                [% IF post.tags %]
-                |  Tags: [% post.tags.join(', ') %]
-                [% END %]
-                </div>
-                <div class="postcontent">
-                  [% post.summary %]
-                  [% IF post.has_more %]<a href="/blog/[% post.filename %]" class="more-link">(more…)</a>[% END %]
-                 </div>
-                <div class="commentslink1-bottom">.: Comment count here :.</div>
+    [% FOREACH post IN posts %]
+    <div class="post" id="post-id">
+        <h2>
+            <a href="/blog/[% post.filename %]" rel="bookmark" title="[% post.title %]">[% post.title %]</a>
+        </h2>
+        <div class="descr">
+            Posted by [% post.author %][% IF post.category %] under [% post.category.join(', ') %][% END %] on [% post.date %]
         </div>
-        [% END %]
-        <div id="pagination">.: &lt;--prev TBD next--&gt;</div>
-</div><!--content-->
+        <div class="entry">
+            [% post.summary %]
+            [% IF post.tags %]
+            Tags: [% post.tags.join(', ') %]
+            [% END %]
+        </div>
+    </div>
+    [% END %]
+    <div class="pagination">
+        <div class="prev-page">Older entries</div>
+        <div class="next-page">Newer entries</div>
+    </div>
+    <!--<div class="entry">
+        <h2>Not Found</h2>
+        <p>Sorry, But there is nothing found.</p>
+    </div>-->
+</div>
 
 [% INCLUDE layout/sidebar.tt %]
 [% INCLUDE layout/footer.tt %]

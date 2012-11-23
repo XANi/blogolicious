@@ -1,12 +1,9 @@
-</div><!--wrapper-->
 <div id="footer">
-            <div class="left">&copy; Theme "zDark" designed by <a href="http://zww.me">zwwooooo</a></div>
-            <div class="right">
-            <a href="#top" rel="nofollow">Back to Top</a> / <a href="[% h.url_for('/') %]" rel="nofollow">Home</a>
-            </div>
-</div><!--footer-->
-</div><!--container-->
-<?php wp_footer(); ?>
+    <div id="copyright">
+    &copy; 2008 Some Rights Reserved.<br />
+    Theme <a href="http://iwp.me/maze/" target="_blank" title="Get Maze theme">Maze</a> by <a href="http://iwp.me" target="_blank" title="Visit iWP.me">iWP.me</a>.
+</div>
+</div>
 </body>
 </html>
 [% USE Dumper %]
