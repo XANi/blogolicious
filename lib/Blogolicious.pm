@@ -9,9 +9,6 @@ use Cwd;
 use Module::Load;
 use Carp qw(carp croak);
 
-use Blogolicious::Blogpost;
-
-
 our $VERSION = '0.01';
 
 # This method will run once at server start
@@ -77,6 +74,8 @@ sub startup {
     $self->{'cache'}{'posts'} = $self->{'backend'}{'posts'}->get_sorted_post_list();
     $self->{'cache'}{'tags'} = $self->{'backend'}{'posts'}->get_tags();
     $self->{'cache'}{'categories'} = $self->{'backend'}{'posts'}->get_categories();
+    $self->{'blogcache'} = $self->{'cache'};
+
     #
     # Router
     my $r = $self->routes;
@@ -85,6 +84,7 @@ sub startup {
             my $self = shift;
             $self->stash(
                 title => $self->app->config('title'),
+                blog => $self->app->{'cache'},
                 posts => $self->app->{'cache'}{'posts'},
                 categories => $self->app->{'cache'}{'categories'},
                 tags  => $self->app->{'cache'}{'tags'},
@@ -101,6 +101,7 @@ sub startup {
             }
             $self->stash(
                 title => $self->app->config('title'),
+                blog => $self->app->{'cache'},
                 posts => $self->app->{'cache'}{'tags'}{ $self->param('tag') }{'posts'},
                 categories => $self->app->{'cache'}{'categories'},
                 tags  => $self->app->{'cache'}{'tags'},
@@ -118,6 +119,7 @@ sub startup {
             }
             $self->stash(
                 title => $self->app->config('title'),
+                blog => $self->app->{'cache'},
                 posts => $self->app->{'cache'}{'categories'}{ $self->param('category') }{'posts'},
                 categories => $self->app->{'cache'}{'categories'},
                 tags  => $self->app->{'cache'}{'tags'},
