@@ -59,38 +59,75 @@ sub startup {
     # TODO move refresher to backend module
     # TODO that should be triggered by inotify
     $self->{'events'}{'post_update'} = AnyEvent->timer (
-        after    => 60,
-        interval => 60,
+        after    => 6,
+        interval => 6,
         cb       => sub {
             print "Updating posts\n";
-            $self->{'cache'}{'post_list'} = $self->{'backend'}{'posts'}->get_sorted_post_list();
-            $self->{'cache'}{'tags'} = $self->{'backend'}{'posts'}->generate_tags( $self->{'cache'}{'post_list'} );
+            $self->{'backend'}{'posts'}->update_post_list;
+            $self->{'cache'}{'posts'} = $self->{'backend'}{'posts'}->get_sorted_post_list();
+            $self->{'cache'}{'tags'} = $self->{'backend'}{'posts'}->get_tags();
+            $self->{'cache'}{'categories'} = $self->{'backend'}{'posts'}->get_categories();
 
         },
     );
 
     # pre-generate cache, we want to have it anyway as post list is needed for main page
-    $self->{'cache'}{'post_list'} = $self->{'backend'}{'posts'}->get_sorted_post_list();
-    $self->{'cache'}{'tags'} = $self->{'backend'}{'posts'}->generate_tags( $self->{'cache'}{'post_list'} );
+    $self->{'backend'}{'posts'}->update_post_list;
+    $self->{'cache'}{'posts'} = $self->{'backend'}{'posts'}->get_sorted_post_list();
+    $self->{'cache'}{'tags'} = $self->{'backend'}{'posts'}->get_tags();
+    $self->{'cache'}{'categories'} = $self->{'backend'}{'posts'}->get_categories();
     #
     # Router
     my $r = $self->routes;
     $r->get(
-       '/' => sub {
-           my $self = shift;
-           opendir (my $posts_dir, $self->app->config('repo_dir') . '/posts/');
-           my @posts = grep(/^\d{4}-\d{2}-\d{2}/ ,readdir($posts_dir));
-           $self->stash(
-               title => $self->app->config('title'),
-               posts => $self->app->{'cache'}{'post_list'},
-               tags  => $self->app->{'cache'}{'tags'},
-               error => $self->flash('error'),
-           );
-           $self->render(template=>'index');
-       },
-   );
-    $r->get('/blog/*blogpost')
-       ->to(controller => 'blogpost', action => 'get');
-}
+        '/' => sub {
+            my $self = shift;
+            $self->stash(
+                title => $self->app->config('title'),
+                posts => $self->app->{'cache'}{'posts'},
+                categories => $self->app->{'cache'}{'categories'},
+                tags  => $self->app->{'cache'}{'tags'},
+                error => $self->flash('error'),
+            );
+            $self->render(template=>'index');
+        },
+    );
+    $r->get(
+        '/blog/tag/*tag' => sub {
+            my $self = shift;
+            if( !defined($self->app->{'cache'}{'tags'}{ $self->param('tag') }) ) {
+                $self->render_not_found;
+            }
+            $self->stash(
+                title => $self->app->config('title'),
+                posts => $self->app->{'cache'}{'tags'}{ $self->param('tag') }{'posts'},
+                categories => $self->app->{'cache'}{'categories'},
+                tags  => $self->app->{'cache'}{'tags'},
+                error => $self->flash('error'),
+            );
+            $self->render(template=>'index');
 
+        }
+    );
+    $r->get(
+        '/blog/category/*category' => sub {
+            my $self = shift;
+            if( !defined($self->app->{'cache'}{'categories'}{ $self->param('category') }) ) {
+                $self->render_not_found;
+            }
+            $self->stash(
+                title => $self->app->config('title'),
+                posts => $self->app->{'cache'}{'categories'}{ $self->param('category') }{'posts'},
+                categories => $self->app->{'cache'}{'categories'},
+                tags  => $self->app->{'cache'}{'tags'},
+                error => $self->flash('error'),
+            );
+            $self->render(template=>'index');
+
+        }
+    );
+    $r->get('/blog/*blogpost')
+        ->to(controller => 'blogpost', action => 'get');
+
+}
 1;

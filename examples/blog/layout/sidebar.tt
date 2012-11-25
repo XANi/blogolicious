@@ -1,9 +1,9 @@
 <div id="sidebar">
     <div id="s_top">
         <h2>Tag Cloud</h2>
-        [% FOREACH tag IN tags.keys %][% tag %] | [% END %]
-
-
+        [% FOREACH tag IN tags.keys %]
+        <a href="/blog/tag/[% tag %]"  style="font-size:[% tags.$tag.count + 8 %]pt;">[% tag %]</a> |
+        [% END %]
         <div class="b_items">
             <h2>SEARCH FORM</h2>
             <div class="slected">Search form here</div>
@@ -12,8 +12,9 @@
         <div id="s_cate"  class="b_items">
             <h2>CATEGORIES</h2>
             <ul>
-                <li> Category list </li>
-                <li> here </li>
+            [% FOREACH category IN categories.keys -%]
+                <li><a href="/blog/category/[% category %]">[% category %] ([% categories.$category.count %])</li>
+            [%- END %]
             </ul>
         </div>
 

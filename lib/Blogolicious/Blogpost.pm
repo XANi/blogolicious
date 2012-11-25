@@ -58,6 +58,7 @@ sub get {
         title    => $post->{'title'},
         author   => $post->{'author'},
         tags     => $self->app->{'cache'}{'tags'},
+        categories => $self->app->{'cache'}{'categories'},
         post     => $post,
         content  => $content,
         comments => $comments,

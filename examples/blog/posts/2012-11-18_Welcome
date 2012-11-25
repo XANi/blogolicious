@@ -2,11 +2,11 @@ Part to first --- mark is ignored by parser so can use it as comment
 ---
 title: Welcome to your blog!
 author: Blogolicious
-tags:
+tag:
   - Tag1
   - testtag2
 category:
-  - Some random category
+  - Random
 ---
 
 ### Welcome in your blog!

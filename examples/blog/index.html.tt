@@ -1,5 +1,6 @@
 [% INCLUDE layout/header.tt %]
 <div id="content">
+    [% IF error %]<h1>[%= error %]</h2>[% END %]
     [% FOREACH post IN posts %]
     <div class="post" id="post-id">
         <h2>

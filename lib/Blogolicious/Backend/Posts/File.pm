@@ -55,8 +55,11 @@ sub parse {
     if ($@) { carp($@); }
 
     # we want arrays to be arrays even if user specifies string
-    if ( defined( $meta->{'tags'} ) && ref($meta->{'tags'}) ne 'ARRAY' ) {
-        $meta->{'tags'} = [ $meta->{'tags'} ];
+    if ( defined( $meta->{'tag'} ) && ref($meta->{'tag'}) ne 'ARRAY' ) {
+        $meta->{'tag'} = [ $meta->{'tag'} ];
+    }
+    if ( defined( $meta->{'category'} ) && ref($meta->{'category'}) ne 'ARRAY' ) {
+        $meta->{'category'} = [ $meta->{'category'} ];
     }
     if ( defined( $opts{'filename'} ) ) {
         $meta->{'filename'} = $opts{'filename'};
@@ -84,16 +87,30 @@ sub get_post_list {
     foreach my $filename (@files) {
         my ($meta, $body) = $self->load_and_parse($filename, meta_only => 1);
         $posts->{$filename} = $meta;
-#        if (defined( $self->{'config'}{'renderer'} ) ) {
      }
     return $posts;
 }
 
-
 sub get_sorted_post_list {
     my $self = shift;
+    if (!defined( $self->{'sorted_posts'} ) ) {
+        $self->update_post_list();
+    }
+    return $self->{'sorted_posts'};
+}
+
+sub get_tags {
+    my $self = shift;
+    return $self->{'tag'};
+}
+sub get_categories {
+    my $self = shift;
+    return $self->{'category'};
+}
+
+sub _sort_post_list {
+    my $self = shift;
     my $posts = shift;
-    $posts ||= $self->get_post_list();
     my $sorted_postnames = [ reverse sort keys $posts ];
     foreach (@$sorted_postnames) {
         $_ = $posts->{$_};
@@ -101,27 +118,26 @@ sub get_sorted_post_list {
    return $sorted_postnames;
 };
 
-sub generate_tags {
+sub update_post_list {
     my $self = shift;
-    my $posts = shift;
-    my $tags = {};
-    foreach my $post (@$posts) {
-        if (! defined( $post->{'tags'} )
-                || scalar @{ $post->{'tags'} } < 1) {
-            next; # ignore tagless posts
-        }
-        foreach my $tag (@{ $post->{'tags'} }) {
-            if (! defined($tags->{$tag}) ) {
-                $tags->{$tag} = {
-                    count => 0,
-                    posts => [],
-                }
+    $self->{'posts'} = $self->get_post_list;
+    $self->{'sorted_posts'} = $self->_sort_post_list( $self->{'posts'} );
+    $self->{'tag'} = {};
+    $self->{'category'} = {};
+    foreach my $post (@{$self->{'sorted_posts'}}) {
+        if (defined( $post->{'tag'} )) {
+            foreach my $tag ( @{ $post->{'tag'} } ) {
+                push @{ $self->{'tag'}{$tag}{'posts'} }, $post;
+                $self->{'tag'}{$tag}{'count'}++;
             }
-            $tags->{$tag}{'count'}++;
-            push @{ $tags->{$tag}{'posts'} }, $post->{'filename'};
+        }
+        if (defined( $post->{'category'} ) ) {
+            foreach my $category ( @{ $post->{'category'} } ) {
+                push @{ $self->{'category'}{$category}{'posts'} }, $post;
+                $self->{'category'}{$category}{'count'}++;
+            }
         }
     }
-    return $tags;
-};
+}
 
 ;1
