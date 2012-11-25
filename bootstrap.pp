@@ -6,6 +6,8 @@ package {[
           'libyaml-libyaml-perl',
           'libtemplate-perl',
           'libev-perl', # fastest ev backend
+          'libxml-feed-perl',
+          'libdigest-sha-perl',
 
           ]:
               ensure => installed,

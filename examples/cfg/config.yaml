@@ -3,6 +3,10 @@ title: Blogolicious test blog!
 description: just another blog
 tmp_dir:  /path/to/blog/files/tmp
 repo_dir: /path/to/blog/files/examples/blog
+base_url: http://127.0.0.1:3000
+
+
+rss_item_count: 30
 
 backends:
   post:

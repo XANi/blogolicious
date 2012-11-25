@@ -11,6 +11,7 @@ use Carp qw(carp croak);
 
 use Blogolicious::Blogpost;
 
+
 our $VERSION = '0.01';
 
 # This method will run once at server start
@@ -128,6 +129,8 @@ sub startup {
     );
     $r->get('/blog/post/*blogpost')
         ->to(controller => 'blogpost', action => 'get');
+    $r->get('/blog/feed')
+        ->to(controller => 'feed', action => 'atom');
 
 }
 1;
