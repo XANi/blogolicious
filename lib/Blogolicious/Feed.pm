@@ -26,7 +26,7 @@ sub atom {
         # TODO handle that when loading post, not in postprocessing
         my $post_date;
         if($post->{'date'} =~ /(\d{4})\-(\d{2})\-(\d{2})/) {
-            my $post_date = DateTime->new(
+            $post_date = DateTime->new(
                 year => $1,
                 month => $2,
                 day => $3,
@@ -41,6 +41,7 @@ sub atom {
         $entry->title($post->{'title'});
         $entry->summary($post->{'summary'});
 #        $entry->content("Foo");
+        $entry->issued($post_date);
         $entry->modified($post_date);
         $entry->author($post->{'author'});
         $feed->add_entry($entry);
