@@ -86,8 +86,6 @@ sub startup {
                 title => $self->app->config('title'),
                 blog => $self->app->{'cache'},
                 posts => $self->app->{'cache'}{'posts'},
-                categories => $self->app->{'cache'}{'categories'},
-                tags  => $self->app->{'cache'}{'tags'},
                 error => $self->flash('error'),
             );
             $self->render(template=>'index');
@@ -103,8 +101,6 @@ sub startup {
                 title => $self->app->config('title'),
                 blog => $self->app->{'cache'},
                 posts => $self->app->{'cache'}{'tags'}{ $self->param('tag') }{'posts'},
-                categories => $self->app->{'cache'}{'categories'},
-                tags  => $self->app->{'cache'}{'tags'},
                 error => $self->flash('error'),
             );
             $self->render(template=>'index');
@@ -121,8 +117,6 @@ sub startup {
                 title => $self->app->config('title'),
                 blog => $self->app->{'cache'},
                 posts => $self->app->{'cache'}{'categories'}{ $self->param('category') }{'posts'},
-                categories => $self->app->{'cache'}{'categories'},
-                tags  => $self->app->{'cache'}{'tags'},
                 error => $self->flash('error'),
             );
             $self->render(template=>'index');

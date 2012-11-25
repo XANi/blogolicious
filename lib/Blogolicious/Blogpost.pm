@@ -57,9 +57,7 @@ sub get {
     $self->stash(
         title    => $post->{'title'},
         author   => $post->{'author'},
-        tags     => $self->app->{'cache'}{'tags'},
-        categories => $self->app->{'cache'}{'categories'},
-        blog => $self->app->{'cache'},
+        blog     => $self->app->{'cache'},
         post     => $post,
         content  => $content,
         comments => $comments,
