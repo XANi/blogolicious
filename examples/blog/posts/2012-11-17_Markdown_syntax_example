@@ -3,14 +3,16 @@ Unparsed comment
 title: Syntax check
 author: Blogolicious
 category:
-  - Test
-  - General
-tag: Markdown
+    - Test
+    - General
+tag:
+    - Markdown
+    - Tag1
 ---
 
 #### This is just some syntax examples for Markdown
 
--- more --
+-- more --v
 
 A First Level Header
 ====================

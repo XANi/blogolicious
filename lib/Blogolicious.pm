@@ -59,8 +59,8 @@ sub startup {
     # TODO move refresher to backend module
     # TODO that should be triggered by inotify
     $self->{'events'}{'post_update'} = AnyEvent->timer (
-        after    => 6,
-        interval => 6,
+        after    => 60,
+        interval => 60,
         cb       => sub {
             print "Updating posts\n";
             $self->{'backend'}{'posts'}->update_post_list;
@@ -126,7 +126,7 @@ sub startup {
 
         }
     );
-    $r->get('/blog/*blogpost')
+    $r->get('/blog/post/*blogpost')
         ->to(controller => 'blogpost', action => 'get');
 
 }

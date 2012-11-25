@@ -4,7 +4,7 @@
     [% FOREACH post IN posts %]
     <div class="post" id="post-id">
         <h2>
-            <a href="/blog/[% post.filename %]" rel="bookmark" title="[% post.title %]">[% post.title %]</a>
+            <a href="/blog/post/[% post.filename %]" rel="bookmark" title="[% post.title %]">[% post.title %]</a>
         </h2>
         <div class="descr">
             Posted by [% post.author %][% IF post.category %] under [% post.category.join(', ') %][% END %] on [% post.date %]
