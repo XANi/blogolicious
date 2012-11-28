@@ -30,6 +30,7 @@ sub startup {
                 COMPILE_EXT => '.ttc',
                 EVAL_PERL => 0,
                 CACHE_SIZE =>0, # 0 means no cache
+  #              STAT_TTL => 3600,
             }
         }
     );
