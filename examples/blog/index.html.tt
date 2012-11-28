@@ -1,4 +1,4 @@
-[% INCLUDE layout/header.tt %]
+[% INCLUDE "layouts/$layout/header.tt" %]
 <div id="content">
     [% IF error %]<h1>[%= error %]</h2>[% END %]
     [% FOREACH post IN posts %]
@@ -27,5 +27,5 @@
     </div>-->
 </div>
 
-[% INCLUDE layout/sidebar.tt %]
-[% INCLUDE layout/footer.tt %]
+[% INCLUDE "layouts/$layout/sidebar.tt" %]
+[% INCLUDE "layouts/$layout/footer.tt" %]
