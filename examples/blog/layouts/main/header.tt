@@ -1,35 +1,18 @@
-<!doctype html>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<title>[% title %]</title>
-<meta name="generator" content="Blogolicious" />
-<meta name="keywords" content="[% # FIXME %]" />
-<meta name="description" content="[% # FIXME %]" />
-<link rel="stylesheet" type="text/css" media="screen" href="/style.css" />
-<link rel="alternate" type="application/atom+xml" title="Atom" href="/blog/feed" /> -->
-[% # fixme more feed formats %]
-<!-- <link rel="pingback" href="[% # fixme pingback plugin %]" /> -->
-</head>
-
-
-<body>
-    <div id="page">
-        <div id="container">
-            <div id="topmenu">
-                <div id="feed">
-                    <a href="/blog/feed">Feed</a>
-                </div>
-            </div>
-            <div id="header">
-                <div id="title">
-                    <h1><a href="/">[% c.config.title %]</a></h1>
-                    <h2>[% c.config.description %]</h2>
-                </div>
-            </div>
-            <div id="menu">
-                <ul>
-                    <li>Home
-                    <li>Page 1
-                    <li>Page 2
-                </ul>
-            </div>
-
+<div id="topmenu">
+    <div id="feed">
+        <a href="/blog/feed">Feed</a>
+    </div>
+</div>
+<div id="header">
+    <div id="title">
+        <h1><a href="/">[% c.config.title %]</a></h1>
+        <h2>[% c.config.description %]</h2>
+    </div>
+</div>
+<div id="menu">
+    <ul>
+        <li>Home
+        <li>Page 1
+        <li>Page 2
+    </ul>
+</div>

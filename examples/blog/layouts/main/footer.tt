@@ -1,10 +1,8 @@
 <div id="footer">
     <div id="copyright">
     Theme <a href="http://iwp.me/maze/" target="_blank" title="Get Maze theme">Maze</a> by <a href="http://iwp.me" target="_blank" title="Visit iWP.me">iWP.me</a>. &copy; 2008 Some Rights Reserved.<br />
+    </div>
 </div>
-</div>
-</body>
-</html>
 [% # USE Dumper %]
 <!--
 [%# Dumper.dump %]

@@ -1,4 +1,3 @@
-[% INCLUDE "layouts/$layout/header.tt" %]
 <div id="content">
     <div class="post">
         <h2>[% post.title %]</h2>
@@ -25,6 +24,3 @@
         </div>
     </div>
 </div>
-
-[% INCLUDE "layouts/$layout/sidebar.tt" %]
-[% INCLUDE "layouts/$layout/footer.tt" %]

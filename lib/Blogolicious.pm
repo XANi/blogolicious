@@ -76,6 +76,11 @@ sub startup {
     $self->{'cache'}{'categories'} = $self->{'backend'}{'posts'}->get_categories();
     $self->{'blogcache'} = $self->{'cache'};
 
+    # define some stash values used by all or almost all routes
+    $self->defaults(blog => $self->{'cache'});
+#    $self->defaults(layouts => $cfg->{'default_layout'} // 'main');
+    $self->defaults(layout => $cfg->{'default_layout'} // 'main');
+
     #
     # Router
     my $r = $self->routes;
@@ -84,11 +89,10 @@ sub startup {
             my $self = shift;
             $self->stash(
                 title => $self->app->config('title'),
-                blog => $self->app->{'cache'},
                 posts => $self->app->{'cache'}{'posts'},
                 error => $self->flash('error'),
             );
-            $self->render(template=>'index');
+            $self->render(template=>'index', layout => 'main');
         },
     );
     $r->get(
@@ -99,7 +103,6 @@ sub startup {
             }
             $self->stash(
                 title => $self->app->config('title'),
-                blog => $self->app->{'cache'},
                 posts => $self->app->{'cache'}{'tags'}{ $self->param('tag') }{'posts'},
                 error => $self->flash('error'),
             );
@@ -115,7 +118,6 @@ sub startup {
             }
             $self->stash(
                 title => $self->app->config('title'),
-                blog => $self->app->{'cache'},
                 posts => $self->app->{'cache'}{'categories'}{ $self->param('category') }{'posts'},
                 error => $self->flash('error'),
             );

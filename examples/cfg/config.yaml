@@ -5,6 +5,7 @@ tmp_dir:  /path/to/blog/files/tmp
 repo_dir: /path/to/blog/files/examples/blog
 base_url: http://127.0.0.1:3000
 
+default_layout: main
 
 rss_item_count: 30
 

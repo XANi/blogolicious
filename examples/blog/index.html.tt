@@ -1,4 +1,3 @@
-[% INCLUDE "layouts/$layout/header.tt" %]
 <div id="content">
     [% IF error %]<h1>[%= error %]</h2>[% END %]
     [% FOREACH post IN posts %]
@@ -26,6 +25,3 @@
         <p>Sorry, But there is nothing found.</p>
     </div>-->
 </div>
-
-[% INCLUDE "layouts/$layout/sidebar.tt" %]
-[% INCLUDE "layouts/$layout/footer.tt" %]
