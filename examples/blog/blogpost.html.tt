@@ -15,7 +15,7 @@
         </div>
         <!--Comments start-->
         <div class="comments_part">
-            [% INCLUDE layout/comments.tt %]
+            [% INCLUDE "layouts/$layout/comments.tt" %]
         </div>
         <!--Comments end-->
         <div class="prew_next">
