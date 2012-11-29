@@ -129,7 +129,7 @@ sub startup {
     $r->get('/blog/post/*blogpost')
         ->to(controller => 'blogpost', action => 'get');
     $r->get('/blog/feed')
-        ->to(controller => 'feed', action => 'atom');
+        ->to(controller => 'feed', action => 'atom', layout => undef);
 
 }
 1;
