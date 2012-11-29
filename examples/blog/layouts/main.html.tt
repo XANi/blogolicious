@@ -1,0 +1,31 @@
+[%- # workaround for mojlicious not passing 'layout' to stash -%]
+[%- layout = 'main' -%]
+<!doctype html>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>[% title %]</title>
+<meta name="generator" content="Blogolicious" />
+<meta name="keywords" content="[% # FIXME %]" />
+<meta name="description" content="[% # FIXME %]" />
+<link rel="stylesheet" type="text/css" media="screen" href="/style.css" />
+<link rel="alternate" type="application/atom+xml" title="Atom" href="/blog/feed" />
+[%- # fixme more feed formats -%]
+[%- #<!-- <link rel="pingback" href=" # fixme pingback plugin" /> --> %]
+</head>
+<body>
+<div id="page">
+    <div id="container">
+<!-- header [% layout %] -->
+[% INCLUDE "layouts/$layout/header.tt" %]
+<!-- content -->
+[% c.content %]
+<!-- sidebar -->
+[% INCLUDE "layouts/$layout/sidebar.tt" %]
+<!-- footer -->
+[% INCLUDE "layouts/$layout/footer.tt" %]
+    </div>
+</div>
+</body>
+</html>
+[% IF debug %]
+[% INCLUDE "layouts/$layout/debug.tt" %]
+[% END %]
