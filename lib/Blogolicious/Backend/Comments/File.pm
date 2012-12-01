@@ -3,8 +3,10 @@ use common::sense;
 
 use YAML::XS;
 use File::Slurp qw(read_file);
+use File::Path qw(make_path);
 use Carp qw(croak carp);
-
+use URI::Escape;
+use DateTime;
 
 sub new {
     my $proto = shift;
@@ -25,6 +27,7 @@ sub new {
     if (!defined $self->{'config'}{'dir'}) {
         croak("You need to specify dir");
     }
+    return $self;
 }
 
 sub add {
@@ -34,9 +37,25 @@ sub add {
     if (!defined( $post ) || $post =~ /^\s*$/) {
         croak("passed post name is invalid or empty");
     }
-    open(my $fh, '>', $self->{'config'}{'dir'} . $post);
+    my $dir = $self->{'config'}{'dir'} . '/' . $post;
+    my $post_name = $self->_mkname();
+    if (! -d $dir) {
+        make_path($dir) or croak ('Can\'t create dir for post');
+    }
+    if( -e $dir . '/' . $post_name) {
+        croak("post in a given second with same author already exists, wtf ?");
+    }
+    open(my $fh, '>', $dir . '/' . $post_name);
     print $fh Dump($data);
     close($fh);
+    return 1;
 }
 
+sub _mkname {
+    my $self = shift;
+    my $comment = shift;
+    my $d = DateTime->now();
+    return $d->ymd . '_' . $d->hms('-') . uri_escape($comment->{'author'});
+}
 
+1;

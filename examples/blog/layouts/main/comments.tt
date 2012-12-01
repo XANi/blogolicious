@@ -4,22 +4,23 @@
 <ol class="commentlist">
     [% FOREACH comment IN comments %]
     <li class="alt authorcomment" id="comment-2">
-		<img alt="" src="http://0.gravatar.com/avatar/?d=identicon&amp;s=56" class="avatar avatar-56 photo avatar-default" height="56" width="56">
+        <img alt="" src="http://0.gravatar.com/avatar/?d=identicon&amp;s=56" class="avatar avatar-56 photo avatar-default" height="56" width="56">
             <cite>1. <a href="[% comment.url %]" rel="external nofollow" class="url">[% comment.author %]</a></cite> Said：
-			<br>
-			    <small class="commentmetadata"><a href="#comment-2" title="">[% comment.date %]</a> </small>
+            <br>
+                <small class="commentmetadata"><a href="#comment-2" title="">[% comment.date %]</a> </small>
                 <p>[% comment.content %]</p>
                 <div class="add_reply">
                     <div class="yus_reply"> </div>
                 </div>
-	</li>
+    </li>
     [% END %]
 </ol>
 [% END %]
 
 <h3 id="respond">Post a reply</h3>
 
-<form action="/post/comment" method="post" id="commentform">
+<form action="/blog/comments/new" method="post" id="commentform">
+    <input type="hidden" name="postid" value="[% post.id %]"
     <p><input type="text" name="author" id="author" class="slected" value="Your name" size="22" tabindex="1" onfocus="if ( value == 'Your name' ) { this.value='' }" onblur="if ( value == '' ) { this.value='Your name' }"></p>
     <p><input type="text" name="email" id="email" class="slected" value="Your email" size="22" tabindex="2" onfocus="if ( value == 'Your email' ) { this.value='' }" onblur="if ( value == '' ) { this.value='Your email' }"></p>
     <p><input type="text" name="url" id="url" class="slected" value="http://" size="22" tabindex="3"></p>

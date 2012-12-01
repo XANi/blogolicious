@@ -1,6 +1,8 @@
 package {[
 #          'libmojolicious-perl', should go from cpan
           'libfile-slurp-perl',
+          'libfile-path-perl',
+          'liburi-encode-perl',
           'libtext-markdown-discount-perl',
           'libjson-xs-perl',
           'libyaml-libyaml-perl',

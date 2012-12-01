@@ -6,10 +6,10 @@ use Mojo::Base 'Mojolicious::Controller';
 use Text::Markdown::Discount qw(markdown);
 use YAML::XS;
 use File::Slurp qw(read_file);
+use Carp qw(cluck croak);
 
 sub get {
     my $self = shift;
-
     my $filename = $self->app->config->{'repo_dir'} . '/posts/' . $self->param('blogpost');
     if ( $self->param('blogpost') !~ /^[0-9a-zA-Z\-_]+$/i) {
         $self->flash({'error' => 'Invalid URL char'});
@@ -30,6 +30,7 @@ sub get {
         return;
     }
     # placeholder for comment handling so we can at least test templates
+    # TODO escape comments!
     my $comments = [
         {
             author  => 'random hacker 1',
