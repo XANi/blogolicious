@@ -10,6 +10,7 @@ package {[
           'libev-perl', # fastest ev backend
           'libxml-feed-perl',
           'libdigest-sha-perl',
+          'libdatetime-format-iso8601-perl'
 
           ]:
               ensure => installed,

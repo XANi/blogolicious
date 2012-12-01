@@ -31,30 +31,31 @@ sub get {
     }
     # placeholder for comment handling so we can at least test templates
     # TODO escape comments!
-    my $comments = [
-        {
-            author  => 'random hacker 1',
-            date    => '2012-01-02',
-            email   => 'some@e.mail',
-            url     => 'http://poster.url',
-            content => ' kjsdkas fiewhf er8hwer7h ddsfhsd',
-        },
-        {
-            author  => 'random hacker 2',
-            date    => '2012-01-03',
-            email   => 'some@e.mail',
-            url     => 'http://poster.url',
-            content => ' kjsdkas fiewhf er8hwer7h ddsfhsd',
-        },
-        {
-            author  => 'random hacker 3',
-            date    => '2012-01-04',
-            email   => 'some@e.mail',
-            url     => 'http://poster.url',
-            content => ' kjsdkas fiewhf er8hwer7h ddsfhsd',
-        },
-    ];
+    # my $comments = [
+    #     {
+    #         author  => 'random hacker 1',
+    #         date    => '2012-01-02',
+    #         email   => 'some@e.mail',
+    #         url     => 'http://poster.url',
+    #         content => ' kjsdkas fiewhf er8hwer7h ddsfhsd',
+    #     },
+    #     {
+    #         author  => 'random hacker 2',
+    #         date    => '2012-01-03',
+    #         email   => 'some@e.mail',
+    #         url     => 'http://poster.url',
+    #         content => ' kjsdkas fiewhf er8hwer7h ddsfhsd',
+    #     },
+    #     {
+    #         author  => 'random hacker 3',
+    #         date    => '2012-01-04',
+    #         email   => 'some@e.mail',
+    #         url     => 'http://poster.url',
+    #         content => ' kjsdkas fiewhf er8hwer7h ddsfhsd',
+    #     },
+    # ];
 
+    my $comments = $self->app->{'backend'}{'comments'}->get_comments($post->{'id'});
     $self->stash(
         title    => $post->{'title'},
         author   => $post->{'author'},

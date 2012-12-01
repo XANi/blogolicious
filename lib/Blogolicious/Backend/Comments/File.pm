@@ -51,6 +51,30 @@ sub add {
     return 1;
 }
 
+sub load_and_parse {
+    my $self = shift;
+    my $file = shift;
+    my $raw = read_file($file);
+    return Load($raw);
+};
+
+sub get_comments {
+    my $self = shift;
+    my $post = shift;
+    my $path = $self->{'config'}{'dir'} . '/' . $post;
+    opendir (my $comments_dir, $path);
+    my @files = grep(/^\d{4}-\d{2}-\d{2}/ ,readdir($comments_dir));
+    my $comments = {};
+    foreach my $filename (@files) {
+        $comments->{$filename} = $self->load_and_parse($path . '/' . $filename);
+    }
+    my $sorted_comments = [ sort keys $comments ];
+    foreach (@$sorted_comments) {
+        $_ = $comments->{$_};
+    }
+    return $sorted_comments;
+}
+
 sub _mkname {
     my $self = shift;
     my $comment = shift;
