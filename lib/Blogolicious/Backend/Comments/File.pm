@@ -62,6 +62,9 @@ sub get_comments {
     my $self = shift;
     my $post = shift;
     my $path = $self->{'config'}{'dir'} . '/' . $post;
+    if (! -d $path) {
+        return [];
+    }
     opendir (my $comments_dir, $path);
     my @files = grep(/^\d{4}-\d{2}-\d{2}/ ,readdir($comments_dir));
     my $comments = {};

@@ -1,5 +1,5 @@
 
-<h3 id="comments">? Respond so far- <small><a href="#comment" title="Add one">Add one»</a></small></h3>
+<h3 id="comments">[% comments.size %] Comment[% IF comments.size != 1 %]s[% END %] so far<br><small><a href="#comment" title="Add one">Add one»</a></small></h3>
 [% IF comments %]
 <ol class="commentlist">
     [% FOREACH comment IN comments %]
