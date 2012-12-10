@@ -7,6 +7,7 @@ use File::Path qw(make_path);
 use Carp qw(croak carp);
 use URI::Escape;
 use DateTime;
+use Digest::MD5 qw(md5_hex);
 
 sub new {
     my $proto = shift;
@@ -55,7 +56,11 @@ sub load_and_parse {
     my $self = shift;
     my $file = shift;
     my $raw = read_file($file);
-    return Load($raw);
+    my $comment = Load($raw);
+    if(defined($comment->{'email'})) {
+        $comment->{'gravatar'} = md5_hex($comment->{'email'});
+    }
+    return $comment;
 };
 
 sub get_comments {

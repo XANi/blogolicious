@@ -4,7 +4,7 @@
 <ol class="commentlist">
     [% FOREACH comment IN comments %]
     <li class="alt authorcomment" id="comment-2">
-        <img alt="" src="http://0.gravatar.com/avatar/?d=identicon&amp;s=56" class="avatar avatar-56 photo avatar-default" height="56" width="56">
+        <img alt="" src="http://0.gravatar.com/avatar/[% comment.gravatar %]?d=identicon&amp;s=56" class="avatar avatar-56 photo avatar-default" height="56" width="56">
             <cite>1. <a href="[% comment.url %]" rel="external nofollow" class="url">[% comment.author %]</a></cite> Said：
             <br>
                 <small class="commentmetadata"><a href="#comment-2" title="">[% comment.date %]</a> </small>

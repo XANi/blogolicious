@@ -8,6 +8,7 @@ use YAML::XS;
 use File::Slurp qw(read_file);
 use Carp qw(cluck croak);
 use Data::Dumper;
+use Digest::MD5;
 
 our $validate = {
     author => qr/^[0-9a-zA-Z\-_\ ]+$/,
@@ -63,11 +64,13 @@ sub new_comment {
         }
     }
     my $t = DateTime->now;
+    lc($self->param('email'));
     my $new_comment = $self->app->{'backend'}{'comments'}->add(
         $self->param('postid'),
         {
             author  => $self->param('author'),
             post    => $self->param('postid'),
+            email   => $self->param('email'),
             date    => $t->datetime,
             url     => $self->param('url'),
             content => $self->param('comment'),
