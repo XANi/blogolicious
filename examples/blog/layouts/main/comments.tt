@@ -1,25 +1,29 @@
 
-<h3 id="comments">? Respond so far- <small><a href="#comment" title="Add one">Add one»</a></small></h3>
+<h3 id="comments">[% comments.size %] Comment[% IF comments.size != 1 %]s[% END %] so far<br><small><a href="#comment" title="Add one">Add one»</a></small></h3>
 [% IF comments %]
 <ol class="commentlist">
     [% FOREACH comment IN comments %]
     <li class="alt authorcomment" id="comment-2">
-		<img alt="" src="http://0.gravatar.com/avatar/?d=identicon&amp;s=56" class="avatar avatar-56 photo avatar-default" height="56" width="56">
+        <img alt="" src="http://0.gravatar.com/avatar/?d=identicon&amp;s=56" class="avatar avatar-56 photo avatar-default" height="56" width="56">
             <cite>1. <a href="[% comment.url %]" rel="external nofollow" class="url">[% comment.author %]</a></cite> Said：
-			<br>
-			    <small class="commentmetadata"><a href="#comment-2" title="">[% comment.date %]</a> </small>
+            <br>
+                <small class="commentmetadata"><a href="#comment-2" title="">[% comment.date %]</a> </small>
                 <p>[% comment.content %]</p>
                 <div class="add_reply">
                     <div class="yus_reply"> </div>
                 </div>
-	</li>
+    </li>
     [% END %]
 </ol>
 [% END %]
 
-<h3 id="respond">Post a reply</h3>
+<h3 id="respond">
+Post a reply<br>
+<div id="results"></div>
+</h3>
 
-<form action="/post/comment" method="post" id="commentform">
+<form id="commentform">
+    <input type="hidden" name="postid" value="[% post.id %]"
     <p><input type="text" name="author" id="author" class="slected" value="Your name" size="22" tabindex="1" onfocus="if ( value == 'Your name' ) { this.value='' }" onblur="if ( value == '' ) { this.value='Your name' }"></p>
     <p><input type="text" name="email" id="email" class="slected" value="Your email" size="22" tabindex="2" onfocus="if ( value == 'Your email' ) { this.value='' }" onblur="if ( value == '' ) { this.value='Your email' }"></p>
     <p><input type="text" name="url" id="url" class="slected" value="http://" size="22" tabindex="3"></p>
@@ -30,4 +34,19 @@
     <p><input name="submit" type="submit" id="submit" class="slected" tabindex="5" value="Submit">
             <input type="hidden" name="comment_post_ID" value="8"></p><br><br>
 </form>
+
+<script type="text/javascript">
+        $(document).ready(function(){
+            $("#commentform").submit( function () {
+              $.post(
+               '/blog/comments/new',
+                $(this).serialize(),
+                function(data){
+                  $("#results").html(data)
+                }
+              );
+              return false;
+            });
+        });
+</script>
 

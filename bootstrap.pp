@@ -1,6 +1,8 @@
 package {[
 #          'libmojolicious-perl', should go from cpan
           'libfile-slurp-perl',
+          'libfile-path-perl',
+          'liburi-encode-perl',
           'libtext-markdown-discount-perl',
           'libjson-xs-perl',
           'libyaml-libyaml-perl',
@@ -8,6 +10,7 @@ package {[
           'libev-perl', # fastest ev backend
           'libxml-feed-perl',
           'libdigest-sha-perl',
+          'libdatetime-format-iso8601-perl'
 
           ]:
               ensure => installed,

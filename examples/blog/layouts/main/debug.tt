@@ -1,0 +1,5 @@
+[% USE Stash %]
+[% USE Dumper %]
+<!--
+    [%  Dumper.dump( Stash.stash() ) %]
+-->

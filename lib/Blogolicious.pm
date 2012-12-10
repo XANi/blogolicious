@@ -4,6 +4,7 @@ use EV;
 use AnyEvent;
 use YAML::XS;
 use File::Slurp qw(read_file);
+use File::Path qw (mkpath);
 use Data::Dumper;
 use Cwd;
 use Module::Load;
@@ -22,6 +23,12 @@ sub startup {
     $self->app->config($cfg);
     print "\n----- started: " . scalar localtime(time()) . "----\n";
     print "Config:\n" . Dump($self->app->config);
+    #defaults
+    $cfg->{'debug'} ||= 0;
+    if ($cfg->{'debug'}) {
+        $self->defaults(debug => 1);
+    }
+
     $self->plugin(
         tt_renderer => {
             template_options => {
@@ -49,10 +56,16 @@ sub startup {
         use Text::Markdown::Discount qw(markdown);
         markdown(shift);
     };
-    my $post_backend = 'Blogolicious::Backend::Posts::' .  ucfirst($cfg->{'backends'}{'post'}{'module'} || 'File');
-    load $post_backend;
-    $self->{'backend'}{'posts'} = $post_backend->new(
+    my $posts_backend = 'Blogolicious::Backend::Posts::' .  ucfirst($cfg->{'backends'}{'posts'}{'module'} || 'File');
+    load $posts_backend;
+    $self->{'backend'}{'posts'} = $posts_backend->new(
         dir => $cfg->{'repo_dir'} . '/posts',
+        renderer => $self->{'backend'}{'content'},
+    );
+    my $comments_backend = 'Blogolicious::Backend::Comments::' .  ucfirst($cfg->{'backends'}{'comments'}{'module'} || 'File');
+    load $comments_backend;
+    $self->{'backend'}{'comments'} = $comments_backend->new(
+        dir => $cfg->{'repo_dir'} . '/comments',
         renderer => $self->{'backend'}{'content'},
     );
     # TODO move refresher to backend module
@@ -130,6 +143,8 @@ sub startup {
         ->to(controller => 'blogpost', action => 'get');
     $r->get('/blog/feed')
         ->to(controller => 'feed', action => 'atom', layout => undef);
-
+    $r->post('/blog/comments/new')
+        ->to(controller => 'blogpost', action => 'new_comment');
 }
+
 1;

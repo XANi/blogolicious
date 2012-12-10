@@ -14,6 +14,10 @@ backends:
     module: file
     cfg:
       dir: posts/
+  comments:
+    module: file
+    cfg:
+      dir: comments/
 
 
 # if you want to put it into production with hypnotoad, 2 x num_of_cores is good starting point

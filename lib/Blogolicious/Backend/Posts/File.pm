@@ -63,6 +63,7 @@ sub parse {
     }
     if ( defined( $opts{'filename'} ) ) {
         $meta->{'filename'} = $opts{'filename'};
+        $meta->{'id'} = $meta->{'filename'};
         ($meta->{'date'}) = $opts{'filename'} =~ m/(\d{4}\-\d{2}\-\d{2})/;
     }
     return ($meta, $body);
@@ -137,6 +138,17 @@ sub update_post_list {
                 $self->{'category'}{$category}{'count'}++;
             }
         }
+    }
+}
+
+sub exists {
+    my $self = shift;
+    my $id = shift;
+    if (defined( $self->{'posts'}{$id})) {
+        return 1
+    }
+    else {
+        return;
     }
 }
 
