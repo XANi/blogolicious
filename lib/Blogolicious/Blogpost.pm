@@ -7,6 +7,15 @@ use Text::Markdown::Discount qw(markdown);
 use YAML::XS;
 use File::Slurp qw(read_file);
 use Carp qw(cluck croak);
+use Data::Dumper;
+
+our $validate = {
+    author => qr/^[0-9a-zA-Z\-_\ ]+$/,
+    email => qr/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,
+    postid => qr/^[0-9a-zA-Z\-_]+$/i,
+    comment => qr/.*/i,
+};
+
 
 sub get {
     my $self = shift;
@@ -40,5 +49,37 @@ sub get {
     );
     $self->render(template=>'blogpost');
 };
+
+sub new_comment {
+    my $self = shift;
+    foreach my $field (qw( author email postid comment) ) {
+        if (!defined $self->param($field)) {
+            $self->render( json => {'error'=> "Required field $field missing"});
+            return;
+        }
+        if ( $self->param($field) !~ $validate->{$field} ) {
+            $self->render( json => {'error'=> "Validation of $field failed"});
+            return;
+        }
+    }
+    my $t = DateTime->now;
+    my $new_comment = $self->app->{'backend'}{'comments'}->add(
+        $self->param('postid'),
+        {
+            author  => $self->param('author'),
+            post    => $self->param('postid'),
+            date    => $t->datetime,
+            url     => $self->param('url'),
+            content => $self->param('comment'),
+        }
+    );
+    if ($new_comment) {
+        $self->render(json => {'msg' => "Comment added!"});
+    }
+    else {
+        $self->render(json => {'error' => "Adding comment failed"});
+    }
+};
+
 
 1;

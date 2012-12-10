@@ -143,37 +143,8 @@ sub startup {
         ->to(controller => 'blogpost', action => 'get');
     $r->get('/blog/feed')
         ->to(controller => 'feed', action => 'atom', layout => undef);
-    $r->post(
-        '/blog/comments/new' => sub {
-            my $self = shift;
-            if (!defined $self->param('author')
-                    || !defined $self->param('email')
-                    || !defined $self->param('postid')
-                    || !defined $self->param('comment')) {
-                $self->render( json => {'error'=> "Required fields missing"});
-                return;
-            }
-            if (! $self->app->{'backend'}{'posts'}->exists($self->param('postid')) ) {
-                $self->render( json => {'error'=> "Specified post ID does not exist"});
-                return;
-            }
-            my $t = DateTime->now;
-            my $new_comment = $self->app->{'backend'}{'comments'}->add(
-                $self->param('postid'),
-                {
-                    author  => $self->param('author'),
-                    post    => $self->param('postid'),
-                    date    => $t->datetime,
-                    url     => $self->param('url'),
-                    content => $self->param('comment'),
-                }
-            );
-            if ($new_comment) {
-                $self->render(json => {'msg' => "Comment added!"});
-            }
-            else {
-                $self->render(json => {'error' => "Comment added!"});
-            }
-        });
-    }
+    $r->post('/blog/comments/new')
+        ->to(controller => 'blogpost', action => 'new_comment');
+}
+
 1;
