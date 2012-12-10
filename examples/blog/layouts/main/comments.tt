@@ -17,9 +17,12 @@
 </ol>
 [% END %]
 
-<h3 id="respond">Post a reply</h3>
+<h3 id="respond">
+Post a reply<br>
+<div id="results"></div>
+</h3>
 
-<form action="/blog/comments/new" method="post" id="commentform">
+<form id="commentform">
     <input type="hidden" name="postid" value="[% post.id %]"
     <p><input type="text" name="author" id="author" class="slected" value="Your name" size="22" tabindex="1" onfocus="if ( value == 'Your name' ) { this.value='' }" onblur="if ( value == '' ) { this.value='Your name' }"></p>
     <p><input type="text" name="email" id="email" class="slected" value="Your email" size="22" tabindex="2" onfocus="if ( value == 'Your email' ) { this.value='' }" onblur="if ( value == '' ) { this.value='Your email' }"></p>
@@ -31,4 +34,19 @@
     <p><input name="submit" type="submit" id="submit" class="slected" tabindex="5" value="Submit">
             <input type="hidden" name="comment_post_ID" value="8"></p><br><br>
 </form>
+
+<script type="text/javascript">
+        $(document).ready(function(){
+            $("#commentform").submit( function () {
+              $.post(
+               '/blog/comments/new',
+                $(this).serialize(),
+                function(data){
+                  $("#results").html(data)
+                }
+              );
+              return false;
+            });
+        });
+</script>
 

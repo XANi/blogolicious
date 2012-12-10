@@ -8,6 +8,7 @@
 <meta name="description" content="[% # FIXME %]" />
 <link rel="stylesheet" type="text/css" media="screen" href="/style.css" />
 <link rel="alternate" type="application/atom+xml" title="Atom" href="/blog/feed" />
+<script type="text/javascript" src="/static/js/jquery-1.8.2.min.js"></script>
 [%- # fixme more feed formats -%]
 [%- #<!-- <link rel="pingback" href=" # fixme pingback plugin" /> --> %]
 </head>

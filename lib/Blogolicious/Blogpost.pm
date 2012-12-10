@@ -74,10 +74,16 @@ sub new_comment {
         }
     );
     if ($new_comment) {
-        $self->render(json => {'msg' => "Comment added!"});
+        $self->render(
+            json => {'msg' => "Comment added!"},
+            text => "Comment added!"
+        );
     }
     else {
-        $self->render(json => {'error' => "Adding comment failed"});
+        $self->render(
+            json => {'error' => "Adding comment failed"},
+            text => "Adding comment failed!",
+        );
     }
 };
 
