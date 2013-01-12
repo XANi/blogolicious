@@ -18,8 +18,19 @@ sub startup {
     # TODO /dev/urandom!!!
     $self->secret(rand(1000000000000000));
     $self->plugin(PoweredBy => (name => "Blogolicious $VERSION"));
-    my $cfg = read_file(getcwd . '/cfg/config.yaml') or croak($!);
+    my $cfg = read_file($self->home->rel_dir('cfg') . '/config.yaml') or croak($!);
     $cfg = Load($cfg) or croak($!);
+    print $self->home->rel_file('/tmp/dupa');
+    # make relative paths absolute
+    my $homedir = quotemeta($self->home);
+    for (
+        $cfg->{'tmp_dir'},
+        $cfg->{'repo_dir'},
+    ) {
+        s{^/}{$homedir};
+    }
+
+
     $self->app->config($cfg);
     print "\n----- started: " . scalar localtime(time()) . "----\n";
     print "Config:\n" . Dump($self->app->config);
