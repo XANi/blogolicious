@@ -64,13 +64,12 @@ sub new_comment {
         }
     }
     my $t = DateTime->now;
-    lc($self->param('email'));
     my $new_comment = $self->app->{'backend'}{'comments'}->add(
         $self->param('postid'),
         {
             author  => $self->param('author'),
             post    => $self->param('postid'),
-            email   => $self->param('email'),
+            email   => lc($self->param('email')),
             date    => $t->datetime,
             url     => $self->param('url'),
             content => $self->param('comment'),

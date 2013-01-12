@@ -1,0 +1,22 @@
+---
+title: Blogolicious test blog!
+description: just another blog
+# by default generate semi-random secret, change it to something if you want to run more than one instance !
+secret: ~
+
+tmp_dir:  tmp
+repo_dir: examples/blog
+base_url: http://127.0.0.1:3000
+rss_item_count: 30
+
+default_layout: main
+
+backends:
+  post:
+    module: file
+    cfg:
+      dir: posts/
+
+      # if you want to put it into production with hypnotoad, 2 x num_of_cores is good starting point
+hypnotoad:
+  workers: 8

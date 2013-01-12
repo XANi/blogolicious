@@ -16,11 +16,22 @@ our $VERSION = '0.01';
 sub startup {
     my $self = shift;
     # TODO /dev/urandom!!!
-    $self->secret(rand(1000000000000000));
     $self->plugin(PoweredBy => (name => "Blogolicious $VERSION"));
-    my $cfg = read_file($self->home->rel_dir('cfg') . '/config.yaml') or croak($!);
+    my $cfg;
+    if ( -e $self->home->rel_file('cfg/config.yaml') ) {
+        $cfg = read_file($self->home->rel_file('cfg/config.yaml')) || croak($!);
+    } else {
+        print "####################\n";
+        print "WARNING! Running on default config!\n";
+        print "please go to cfg/ and cp config.default.yaml to config.yaml!\n";
+        print "####################\n";
+
+        $cfg = read_file($self->home->rel_file('cfg/config.default.yaml')) || croak($!);
+    }
     $cfg = Load($cfg) or croak($!);
-    print $self->home->rel_file('/tmp/dupa');
+
+    $self->secret( $cfg->{'secret'} || rand(1000000000000000) );
+
     # make relative paths absolute
     my $homedir = quotemeta($self->home);
     for (
