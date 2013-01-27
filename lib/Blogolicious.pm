@@ -128,14 +128,16 @@ sub startup {
     $r->get(
         '/' => sub {
             my $self = shift;
-            my $has_next = 0;
-            if ( $self->app->{'backend'}{'posts'}->get_posts_range($self->app->config('posts_per_page'), 1) ) {$has_next = 1;}
+            my $has_older = 0;
+            if ( $self->app->{'backend'}{'posts'}->get_posts_range($self->app->config('posts_per_page'), 1) ) {
+                $has_older = 1;
+            }
             $self->stash(
                 title => $self->app->config('title'),
                 posts => $self->app->{'backend'}{'posts'}->get_posts_range(0,10),
                 error => $self->flash('error'),
-                has_prev => 0,  # title page, nothing newer than this
-                has_next => $has_next,
+                has_newer => 0,  # title page, nothing newer than this
+                has_older => $has_older,
             );
             $self->render(template=>'index', layout => 'main');
         },
@@ -175,17 +177,22 @@ sub startup {
             my $self = shift;
             my $start = int( $self->param('page')* $self->app->config('posts_per_page') );
             my $posts =  $self->app->{'backend'}{'posts'}->get_posts_range( $start, $self->app->config('posts_per_page') + 1);
-            my $has_next = 0;
-            my $has_prev = 0;
-            if ( int($self->param('page')) > 0) { $has_prev = 1}
+            my $has_older = 0;
+            my $has_newer = 0;
+            if ( $self->param('page') > 0 ) {
+                $has_newer = 1;
+            }
+
+            if ( int($self->param('page')) > 0) { $has_newer = 1}
             if (scalar @$posts > $self->app->config('posts_per_page')) {
-                $has_next = 1;
+                $has_older = 1;
                 pop @$posts;
             }
 
             $self->stash(
                 posts => $posts,
-                has_next => $has_next,
+                has_older => $has_older,
+                has_newer => $has_newer,
                 error => $self->flash('error'),
             );
             $self->render(template=>'index');

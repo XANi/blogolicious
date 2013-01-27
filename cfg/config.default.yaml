@@ -12,6 +12,8 @@ posts_per_page: 10
 
 default_layout: main
 
+# debug: 1
+
 backends:
   post:
     module: file
@@ -21,3 +23,4 @@ backends:
       # if you want to put it into production with hypnotoad, 2 x num_of_cores is good starting point
 hypnotoad:
   workers: 8
+

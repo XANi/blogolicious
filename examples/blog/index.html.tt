@@ -17,8 +17,8 @@
     </div>
     [% END %]
     <div class="pagination">
-        <div class="prev-page">Older entries</div>
-        <div class="next-page">Newer entries</div>
+       [% IF has_older %]<div class="prev-page"><a href="/blog/page/[% page + 1 %]">Older entries</a></div>[% END %]
+       [% IF has_newer %]<div class="next-page"><a href="/blog/page/[% page - 1 %]">Newer entries</a></div>[% END %]
     </div>
     <!--<div class="entry">
         <h2>Not Found</h2>
