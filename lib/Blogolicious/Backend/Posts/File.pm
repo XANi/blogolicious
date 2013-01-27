@@ -171,7 +171,7 @@ sub _get_range {
     my $count = shift;
     my $array = shift;
     if (! defined( $array->[0] ) ) {
-        return [ ];
+        return;
     }
     my $last = min( scalar @{ $array }, ( $start + $count ));
     --$last;

@@ -42,6 +42,8 @@ sub startup {
         s{^/}{$homedir};
     }
 
+    # defaults
+    $cfg->{'posts_per_page'} ||= 10;
 
     $self->app->config($cfg);
     print "\n----- started: " . scalar localtime(time()) . "----\n";
@@ -114,9 +116,11 @@ sub startup {
     $self->{'blogcache'} = $self->{'cache'};
 
     # define some stash values used by all or almost all routes
-    $self->defaults(blog => $self->{'cache'});
-#    $self->defaults(layouts => $cfg->{'default_layout'} // 'main');
-    $self->defaults(layout => $cfg->{'default_layout'} // 'main');
+    $self->defaults(
+        title => $self->config('title'),
+        blog => $self->{'cache'},
+        layout => $cfg->{'default_layout'} // 'main',
+    );
 
     #
     # Router
@@ -124,11 +128,14 @@ sub startup {
     $r->get(
         '/' => sub {
             my $self = shift;
-
+            my $has_next = 0;
+            if ( $self->app->{'backend'}{'posts'}->get_posts_range($self->app->config('posts_per_page'), 1) ) {$has_next = 1;}
             $self->stash(
                 title => $self->app->config('title'),
                 posts => $self->app->{'backend'}{'posts'}->get_posts_range(0,10),
                 error => $self->flash('error'),
+                has_prev => 0,  # title page, nothing newer than this
+                has_next => $has_next,
             );
             $self->render(template=>'index', layout => 'main');
         },
@@ -166,7 +173,23 @@ sub startup {
     $r->get(
         '/blog/page/*page' => sub {
             my $self = shift;
+            my $start = int( $self->param('page')* $self->app->config('posts_per_page') );
+            my $posts =  $self->app->{'backend'}{'posts'}->get_posts_range( $start, $self->app->config('posts_per_page') + 1);
+            my $has_next = 0;
+            my $has_prev = 0;
+            if ( int($self->param('page')) > 0) { $has_prev = 1}
+            if (scalar @$posts > $self->app->config('posts_per_page')) {
+                $has_next = 1;
+                pop @$posts;
             }
+
+            $self->stash(
+                posts => $posts,
+                has_next => $has_next,
+                error => $self->flash('error'),
+            );
+            $self->render(template=>'index');
+        }
     );
 
 
