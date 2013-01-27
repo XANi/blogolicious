@@ -9,8 +9,9 @@ use Data::Dumper;
 use Cwd;
 use Module::Load;
 use Carp qw(carp croak);
+use List::Util qw(max min);
 
-our $VERSION = '0.01';
+our $VERSION = '0.02';
 
 # This method will run once at server start
 sub startup {
@@ -123,9 +124,10 @@ sub startup {
     $r->get(
         '/' => sub {
             my $self = shift;
+
             $self->stash(
                 title => $self->app->config('title'),
-                posts => $self->app->{'cache'}{'posts'},
+                posts => $self->app->{'backend'}{'posts'}->get_posts_range(0,10),
                 error => $self->flash('error'),
             );
             $self->render(template=>'index', layout => 'main');
@@ -161,6 +163,13 @@ sub startup {
 
         }
     );
+    $r->get(
+        '/blog/page/*page' => sub {
+            my $self = shift;
+            }
+    );
+
+
     $r->get('/blog/post/*blogpost')
         ->to(controller => 'blogpost', action => 'get');
     $r->get('/blog/feed')

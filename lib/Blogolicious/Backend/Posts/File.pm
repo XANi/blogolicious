@@ -5,6 +5,7 @@ use common::sense;
 use YAML::XS;
 use File::Slurp qw(read_file);
 use Carp qw(croak carp);
+use List::Util qw(min max);
 sub new {
     my $proto = shift;
     my $class = ref($proto) || $proto;
@@ -140,6 +141,43 @@ sub update_post_list {
         }
     }
 }
+
+sub get_posts_range {
+    my $self = shift;
+    my $start = shift;
+    my $count = shift;
+    return $self->_get_range($start, $count, $self->{'sorted_posts'});
+}
+
+sub get_tag_range {
+    my $self = shift;
+    my $tag = shift;
+    my $start = shift;
+    my $count = shift;
+    return $self->_get_range($start, $count, $self->{'tag'}{$tag});
+}
+
+sub get_category_range {
+    my $self = shift;
+    my $category = shift;
+    my $start = shift;
+    my $count = shift;
+    return $self->_get_range($start, $count, $self->{'category'}{$category});
+}
+
+sub _get_range {
+    my $self = shift;
+    my $start = shift;
+    my $count = shift;
+    my $array = shift;
+    if (! defined( $array->[0] ) ) {
+        return [ ];
+    }
+    my $last = min( scalar @{ $array }, ( $start + $count ));
+    --$last;
+    return [ @$array[ $start .. $last ] ];
+}
+
 
 sub exists {
     my $self = shift;

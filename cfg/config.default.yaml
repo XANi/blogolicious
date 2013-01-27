@@ -8,6 +8,7 @@ tmp_dir:  tmp
 repo_dir: examples/blog
 base_url: http://127.0.0.1:3000
 rss_item_count: 30
+posts_per_page: 10
 
 default_layout: main
 
