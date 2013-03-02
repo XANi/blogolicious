@@ -198,7 +198,8 @@ sub startup {
     );
 
 
-    $r->get('/blog/post/*blogpost')
+#    $r->route('/blog/post/*blogpost', blogpost => qr/^[0-9a-zA-Z\-_]+$/)
+    $r->route('/blog/post/*blogpost', blogpost => qr/[0-9a-zA-Z\-\_]+$/)
         ->to(controller => 'blogpost', action => 'get');
     $r->get('/blog/feed')
         ->to(controller => 'feed', action => 'atom', layout => undef);
