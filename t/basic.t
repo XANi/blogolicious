@@ -1,3 +1,4 @@
+use lib 'lib';
 use Mojo::Base -strict;
 
 use Test::More;
