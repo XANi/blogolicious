@@ -15,6 +15,7 @@ our $validate = {
     email => qr/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,
     postid => qr/^[0-9a-zA-Z\-_]+$/i,
     comment => qr/.*/i,
+    url     => qr/http.*/i,
 };
 
 
@@ -53,12 +54,16 @@ sub get {
 
 sub new_comment {
     my $self = shift;
+    # required fields
     foreach my $field (qw( author email postid comment) ) {
         if (!defined $self->param($field)) {
             $self->render( json => {'error'=> "Required field $field missing"}, status => 500);
             return;
         }
-        if ( $self->param($field) !~ $validate->{$field} ) {
+    }
+    # used fields
+    foreach my $field (qw( author email postid comment url) ) {
+        if ( defined( $self->param($field) ) && $self->param($field) !~ $validate->{$field} ) {
             $self->render( json => {'error'=> "Validation of $field failed"}, status => 500);
             return;
         }

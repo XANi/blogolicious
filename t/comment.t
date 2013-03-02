@@ -9,7 +9,7 @@ my $t = Test::Mojo->new('Blogolicious');
 $t->post_ok(
     '/blog/comments/new' => form =>
         {
-            author => 'bot',
+            author => 'bot1',
             email => 'testmail@example.com',
             postid => '2012-11-16_testpost',
              comment => 'test adding comment',
@@ -20,7 +20,7 @@ $t->post_ok(
 $t->post_ok(
         '/blog/comments/new' => form =>
         {
-            author => 'bot',
+            author => 'bot2',
             email => 'bad_email',
             postid => '2012-11-16_testpost',
             comment => 'test adding comment',
@@ -37,7 +37,7 @@ $t->post_ok(
 $t->post_ok(
         '/blog/comments/new' => form =>
         {
-            author => 'bot',
+            author => 'bot3',
             email => 'testmail@example.com',
             postid => '1901-11-16_testpost',
             comment => 'test adding comment',
@@ -47,10 +47,10 @@ $t->post_ok(
 $t->post_ok(
     '/blog/comments/new' => form =>
         {
-            author => 'bot',
+            author => 'bot4',
             email => 'testmail@example.com',
             postid => '2012-11-16_testpost',
-            comment => 'test adding comment',
+            comment => 'test adding another comment',
             url => 'http://example.com',
         },
     'post comment')
@@ -59,7 +59,7 @@ $t->post_ok(
 $t->post_ok(
     '/blog/comments/new' => form =>
         {
-            author => 'bot',
+            author => 'bot5',
             email => 'testmail@example.com',
             postid => '2012-11-16_testpost',
             comment => 'test adding comment',
