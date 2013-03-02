@@ -55,7 +55,7 @@ sub new_comment {
     my $self = shift;
     foreach my $field (qw( author email postid comment) ) {
         if (!defined $self->param($field)) {
-            $self->render( json => {'error'=> "Required field $field missing"});
+            $self->render( json => {'error'=> "Required field $field missing"}, status => 500);
             return;
         }
         if ( $self->param($field) !~ $validate->{$field} ) {
