@@ -3,6 +3,7 @@
 .*.sw?
 .sw?
 \#*\#
+.\#*
 DEADJOE
 *.orig
 #
@@ -18,6 +19,7 @@ Build.bat
 Makefile
 Makefile.old
 MANIFEST.bak
+meta.yml
 META.yml
 MYMETA.yml
 nytprof.out

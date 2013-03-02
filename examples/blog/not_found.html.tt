@@ -1,0 +1,1 @@
+<img src="[% h.url_for('/mojolicious-failraptor.png') %]">
