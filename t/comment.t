@@ -43,4 +43,28 @@ $t->post_ok(
             comment => 'test adding comment',
         })
     ->status_is(500, 'comment to nonexisting blogpost not accepted');
+
+$t->post_ok(
+    '/blog/comments/new' => form =>
+        {
+            author => 'bot',
+            email => 'testmail@example.com',
+            postid => '2012-11-16_testpost',
+            comment => 'test adding comment',
+            url => 'http://example.com',
+        },
+    'post comment')
+    ->status_is(200)->content_like(qr/comment added/i,'adding comment with url');
+
+$t->post_ok(
+    '/blog/comments/new' => form =>
+        {
+            author => 'bot',
+            email => 'testmail@example.com',
+            postid => '2012-11-16_testpost',
+            comment => 'test adding comment',
+            url => 'h://example.com',
+        },
+    'post comment')
+    ->status_is(500)->content_like(qr/comment added/i,'adding comment with bad url');
 done_testing();
