@@ -59,7 +59,7 @@ sub new_comment {
             return;
         }
         if ( $self->param($field) !~ $validate->{$field} ) {
-            $self->render( json => {'error'=> "Validation of $field failed"});
+            $self->render( json => {'error'=> "Validation of $field failed"}, status => 500);
             return;
         }
     }
