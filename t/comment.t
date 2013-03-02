@@ -15,6 +15,8 @@ $t->post_form_ok(
             content => 'test adding comment',
         },
     'post comment')
-    ->status_is(200)->content_like(qr/test adding comment/i,'check if added comment shows up');
+    ->status_is(200)->content_like(qr/comment added/i,'post returns ok');
+$t->get_ok('/blog/post/2012-11-16_testpost/')
+    ->content_like(qr/test adding comment/,'added comment is on page');
 
 done_testing();
