@@ -63,6 +63,9 @@ sub new_comment {
             return;
         }
     }
+    if (! $self->app->{'backend'}{'posts'}->exists($self->param('postid')) ) {
+        $self->render( json => {'error'=> "no post with that name exists"}, status => 500);
+    }
     my $t = DateTime->now;
     my $new_comment = $self->app->{'backend'}{'comments'}->add(
         $self->param('postid'),
