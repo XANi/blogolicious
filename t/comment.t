@@ -6,19 +6,19 @@ use Test::Mojo;
 
 my $t = Test::Mojo->new('Blogolicious');
 
-$t->post_form_ok(
-    '/blog/comments/new' =>
+$t->post_ok(
+    '/blog/comments/new' => form =>
         {
             author => 'bot',
             email => 'testmail@example.com',
             postid => '2012-11-16_testpost',
-            comment => 'test adding comment',
+             comment => 'test adding comment',
         },
     'post comment')
     ->status_is(200)->content_like(qr/comment added/i,'post returns ok');
 
-$t->post_form_ok(
-        '/blog/comments/new' =>
+$t->post_ok(
+        '/blog/comments/new' => form =>
         {
             author => 'bot',
             email => 'bad_email',
@@ -26,16 +26,16 @@ $t->post_form_ok(
             comment => 'test adding comment',
         })
     ->status_is(500, 'invalid comment not accepted');
-$t->post_form_ok(
-        '/blog/comments/new' =>
+$t->post_ok(
+        '/blog/comments/new' => form =>
         {
             email => 'testmail@example.com',
             postid => '2012-11-16_testpost',
             comment => 'test adding comment',
         })
     ->status_is(500, 'comment with missing field not accepted');
-$t->post_form_ok(
-        '/blog/comments/new' =>
+$t->post_ok(
+        '/blog/comments/new' => form =>
         {
             author => 'bot',
             email => 'testmail@example.com',
