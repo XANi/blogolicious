@@ -66,5 +66,5 @@ $t->post_ok(
             url => 'h://example.com',
         },
     'post comment')
-    ->status_is(500)->content_like(qr/comment added/i,'adding comment with bad url');
+    ->status_is(501,'adding comment with bad url');
 done_testing();
