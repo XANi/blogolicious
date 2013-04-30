@@ -16,21 +16,21 @@ our $VERSION = '0.02';
 # This method will run once at server start
 sub startup {
     my $self = shift;
-    # TODO /dev/urandom!!!
     $self->plugin(PoweredBy => (name => "Blogolicious $VERSION"));
     my $cfg;
     if ( -e $self->home->rel_file('cfg/config.yaml') ) {
         $cfg = read_file($self->home->rel_file('cfg/config.yaml')) || croak($!);
     } else {
-        print "####################\n";
-        print "WARNING! Running on default config!\n";
-        print "please go to cfg/ and cp config.default.yaml to config.yaml!\n";
-        print "####################\n";
+        print STDERR "####################\n";
+        print STDERR "WARNING! Running on default config!\n";
+        print STDERR "please go to cfg/ and cp config.default.yaml to config.yaml!\n";
+        print STDERR "####################\n";
 
         $cfg = read_file($self->home->rel_file('cfg/config.default.yaml')) || croak($!);
     }
     $cfg = Load($cfg) or croak($!);
 
+    # TODO /dev/urandom!!!
     $self->secret( $cfg->{'secret'} || rand(1000000000000000) );
 
     # make relative paths absolute
@@ -46,8 +46,8 @@ sub startup {
     $cfg->{'posts_per_page'} ||= 10;
 
     $self->app->config($cfg);
-    print "\n----- started: " . scalar localtime(time()) . "----\n";
-    print "Config:\n" . Dump($self->app->config);
+    print STDERR "\n----- started: " . scalar localtime(time()) . "----\n";
+    print STDERR "Config:\n" . Dump($self->app->config);
     #defaults
     $cfg->{'debug'} ||= 0;
     if ($cfg->{'debug'}) {
@@ -68,8 +68,6 @@ sub startup {
     );
     $self->renderer->default_handler('tt');
     $self->renderer->paths([$cfg->{'repo_dir'}]);
-    # Documentation browser under "/perldoc"
-    $self->plugin('PODRenderer');
 
     # helpers
     $self->plugin('DefaultHelpers');
@@ -77,8 +75,8 @@ sub startup {
     # backends
     #
     # TODO move to plugin
+    use Text::Markdown::Discount qw(markdown);
     $self->{'backend'}{'content'} = sub {
-        use Text::Markdown::Discount qw(markdown);
         markdown(shift);
     };
     my $posts_backend = 'Blogolicious::Backend::Posts::' .  ucfirst($cfg->{'backends'}{'posts'}{'module'} || 'File');
@@ -87,7 +85,7 @@ sub startup {
         dir => $cfg->{'repo_dir'} . '/posts',
         renderer => $self->{'backend'}{'content'},
     );
-    my $comments_backend = 'Blogolicious::Backend::Comments::' .  ucfirst($cfg->{'backends'}{'comments'}{'module'} || 'File');
+    my $comments_backend = 'Blogolicious::Backend::Comments::' . ucfirst($cfg->{'backends'}{'comments'}{'module'} || 'File');
     load $comments_backend;
     $self->{'backend'}{'comments'} = $comments_backend->new(
         dir => $cfg->{'repo_dir'} . '/comments',
@@ -99,7 +97,7 @@ sub startup {
         after    => 60,
         interval => 60,
         cb       => sub {
-            print "Updating posts\n";
+            print STDERR "Updating posts\n";
             $self->{'backend'}{'posts'}->update_post_list;
             $self->{'cache'}{'posts'} = $self->{'backend'}{'posts'}->get_sorted_post_list();
             $self->{'cache'}{'tags'} = $self->{'backend'}{'posts'}->get_tags();
@@ -200,7 +198,8 @@ sub startup {
     );
 
 
-    $r->get('/blog/post/*blogpost')
+#    $r->route('/blog/post/*blogpost', blogpost => qr/^[0-9a-zA-Z\-_]+$/)
+    $r->route('/blog/post/*blogpost', blogpost => qr/[0-9a-zA-Z\-\_]+$/)
         ->to(controller => 'blogpost', action => 'get');
     $r->get('/blog/feed')
         ->to(controller => 'feed', action => 'atom', layout => undef);

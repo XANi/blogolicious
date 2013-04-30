@@ -39,7 +39,7 @@ sub add {
         croak("passed post name is invalid or empty");
     }
     my $dir = $self->{'config'}{'dir'} . '/' . $post;
-    my $post_name = $self->_mkname();
+    my $post_name = $self->_mkname($data);
     if (! -d $dir) {
         make_path($dir) or croak ('Can\'t create dir for post');
     }
