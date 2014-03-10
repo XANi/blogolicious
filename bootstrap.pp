@@ -16,5 +16,21 @@ package {[
 }
 
 
+# ugly but good enougth
+exec {'install-mojolicious-ttrenderer':
+    command   => '/usr/bin/env cpan Mojolicious::Plugin::TtRenderer',
+    unless    => '/usr/bin/env perl -e"use Mojolicious::Plugin::TtRenderer"',
+    logoutput => true,
+}
 
-notify { 'please install Mojolicious::Plugin::TtRenderer (and Mojolicious itself) from cpanm':;}
+# just in case it isnt in required
+exec {'install-mojolicious':
+    command   => '/usr/bin/env cpan Mojolicious',
+    unless    => '/usr/bin/env perl -e"use Mojolicious"',
+    logoutput => true,
+}
+
+
+
+
+# notify { 'please install Mojolicious::Plugin::TtRenderer (and Mojolicious itself) from cpanm':;}

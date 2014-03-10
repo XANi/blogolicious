@@ -35,17 +35,23 @@ Post a reply<br>
 </form>
 
 <script type="text/javascript">
-        $(document).ready(function(){
-            $("#commentform").submit( function () {
-              $.post(
-               '/blog/comments/new',
-                $(this).serialize(),
-                function(data){
-                  $("#results").html(data)
-                }
-              );
-              return false;
+    $(document).ready(function(){
+        $("#commentform").submit( function () {
+            $.ajax({
+                type: "POST",
+                url: '/blog/comments/new',
+                headers: {
+                    Accept : "application/json",
+                },
+                dataType: 'json',
+                data: $(this),
+                success:  function(data){
+                    $("#results").html(data)
+                },
             });
+            return false;
         });
+
+    });
 </script>
 

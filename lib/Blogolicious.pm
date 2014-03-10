@@ -16,7 +16,7 @@ our $VERSION = '0.02';
 # This method will run once at server start
 sub startup {
     my $self = shift;
-    $self->plugin(PoweredBy => (name => "Blogolicious $VERSION"));
+    my $mode = $self->app->mode;
     my $cfg;
     if ( -e $self->home->rel_file('cfg/config.yaml') ) {
         $cfg = read_file($self->home->rel_file('cfg/config.yaml')) || croak($!);
@@ -31,7 +31,7 @@ sub startup {
     $cfg = Load($cfg) or croak($!);
 
     # TODO /dev/urandom!!!
-    $self->secret( $cfg->{'secret'} || rand(1000000000000000) );
+    $self->secrets( $cfg->{'secret'} || rand(1000000000000000) );
 
     # make relative paths absolute
     my $homedir = quotemeta($self->home);
