@@ -10,6 +10,7 @@ use Cwd;
 use Module::Load;
 use Carp qw(carp croak);
 use List::Util qw(max min);
+use Log::Any qw($log);
 
 our $VERSION = '0.02';
 
@@ -21,11 +22,7 @@ sub startup {
     if ( -e $self->home->rel_file('cfg/config.yaml') ) {
         $cfg = read_file($self->home->rel_file('cfg/config.yaml')) || croak($!);
     } else {
-        print STDERR "####################\n";
-        print STDERR "WARNING! Running on default config!\n";
-        print STDERR "please go to cfg/ and cp config.default.yaml to config.yaml!\n";
-        print STDERR "####################\n";
-
+        $log->warn("WARNING! Running on default config!, please go to cfg/ and cp config.default.yaml to config.yaml!");
         $cfg = read_file($self->home->rel_file('cfg/config.default.yaml')) || croak($!);
     }
     $cfg = Load($cfg) or croak($!);
@@ -46,8 +43,8 @@ sub startup {
     $cfg->{'posts_per_page'} ||= 10;
 
     $self->app->config($cfg);
-    print STDERR "\n----- started: " . scalar localtime(time()) . "----\n";
-    print STDERR "Config:\n" . Dump($self->app->config);
+    $log->notice("\n----- started: " . scalar localtime(time()) . "----");
+    $log->debug("Config:\n" . Dump($self->app->config));
     #defaults
     $cfg->{'debug'} ||= 0;
     if ($cfg->{'debug'}) {
@@ -97,7 +94,7 @@ sub startup {
         after    => 60,
         interval => 60,
         cb       => sub {
-            print STDERR "Updating posts\n";
+            $log->info("Updating posts");
             $self->{'backend'}{'posts'}->update_post_list;
             $self->{'cache'}{'posts'} = $self->{'backend'}{'posts'}->get_sorted_post_list();
             $self->{'cache'}{'tags'} = $self->{'backend'}{'posts'}->get_tags();
