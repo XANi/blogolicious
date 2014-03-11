@@ -11,6 +11,7 @@ use Module::Load;
 use Carp qw(carp croak);
 use List::Util qw(max min);
 use Log::Any qw($log);
+use Log::Any::Adapter;
 
 our $VERSION = '0.02';
 
@@ -19,6 +20,7 @@ sub startup {
     my $self = shift;
     my $mode = $self->app->mode;
     my $cfg;
+    Log::Any::Adapter->set('Mojo', logger => $self->app->log);
     if ( -e $self->home->rel_file('cfg/config.yaml') ) {
         $cfg = read_file($self->home->rel_file('cfg/config.yaml')) || croak($!);
     } else {
