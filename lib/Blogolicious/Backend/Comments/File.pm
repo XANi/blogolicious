@@ -76,7 +76,7 @@ sub get_comments {
     foreach my $filename (@files) {
         $comments->{$filename} = $self->load_and_parse($path . '/' . $filename);
     }
-    my $sorted_comments = [ sort keys $comments ];
+    my $sorted_comments = [ sort keys(%$comments) ];
     foreach (@$sorted_comments) {
         $_ = $comments->{$_};
     }

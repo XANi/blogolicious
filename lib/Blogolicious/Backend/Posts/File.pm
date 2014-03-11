@@ -113,7 +113,7 @@ sub get_categories {
 sub _sort_post_list {
     my $self = shift;
     my $posts = shift;
-    my $sorted_postnames = [ reverse sort keys $posts ];
+    my $sorted_postnames = [ reverse sort keys(%$posts) ];
     foreach (@$sorted_postnames) {
         $_ = $posts->{$_};
     }
