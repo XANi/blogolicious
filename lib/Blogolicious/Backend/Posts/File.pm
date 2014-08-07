@@ -1,39 +1,45 @@
 package Blogolicious::Backend::Posts::File;
 
+use namespace::clean;
+use Moo;
+
 use common::sense;
 
 use YAML::XS;
 use File::Slurp qw(read_file);
 use Carp qw(croak carp);
 use List::Util qw(min max);
-sub new {
-    my $proto = shift;
-    my $class = ref($proto) || $proto;
-    my $self = {};
-    bless($self, $class);
+use Log::Any qw($log);
+use Data::Dumper;
 
-    if (ref($_[0]) eq 'ARRAY') {
-        $self->{'config'} = shift;
-    }
-    elsif (ref($_[0]) eq 'HASH') {
-        $self->{'config'} = shift;
-    }
-    else {
-        my %config = @_;
-        $self->{'config'} = \%config;
-    }
-    if (!defined $self->{'config'}{'dir'}) {
-        croak("You need to specify dir");
-    }
-    if (!defined( $self->{'config'}{'renderer'} ) ) {
-        carp("Renderer not specified, will render as plaintext!");
-        $self->{'config'}{'renderer'} = sub { return shift; };
-    }
-    # this is where summary ends
-    $self->{'config'}{'summary_tag'} ||= '\n\s*-- more --';
-    return $self;
-};
+has 'dir' => (
+    is => 'ro',
+    isa => sub {
+        if (!defined($_[0])) {
+            croak("Need file dir!")
+        }
+    },
+);
 
+has 'renderer' => (
+    is => 'ro',
+    isa => sub {
+        if (!defined($_[0])) {
+            $log->warn("No renderer, will decode as plaintext!");
+        }
+    },
+);
+
+has 'summary_tag' => (
+    is => 'ro',
+    default => sub { '\n\s*-- more --' },
+);
+
+
+sub   BUILD {
+    my $self = shift;
+    print Dumper $self;
+}
 
 sub parse {
     my $self = shift;
@@ -45,13 +51,13 @@ sub parse {
     # TODO handle fail condition instead of ignoring
     eval {
         $meta = Load($raw_meta);
-        ($meta->{'summary'},$tmp) = split(/$self->{'config'}{'summary_tag'}/, $body,2);
+        ($meta->{'summary'},$tmp) = split(/$self->summary_tag/, $body,2);
         if (defined($tmp) && $tmp !~ /^\s*$/) {
             $meta->{'has_more'} = 1;
         }
         $body = $meta->{'summary'} . $tmp;
-        $body = &{ $self->{'config'}{'renderer'} }($body);
-        $meta->{'summary'} = &{ $self->{'config'}{'renderer'} }($meta->{'summary'});
+        $body = &{ $self->renderer }($body);
+        $meta->{'summary'} = &{ $self->renderer }($meta->{'summary'});
     };
     if ($@) { carp($@); }
 
@@ -74,7 +80,7 @@ sub load_and_parse {
     my $self = shift;
     my $filename = shift;
     my %opts = @_;
-    my $path =  $self->{'config'}{'dir'};
+    my $path =  $self->dir;
     my $file = read_file($path . '/'. $filename);
     my ($meta, $body) = $self->parse($file, meta_only => 1, filename => $filename);
     return ($meta, $body);
@@ -83,7 +89,7 @@ sub load_and_parse {
 sub get_post_list {
     my $self = shift;
     my $posts = {};
-    my $path = $self->{'config'}{'dir'};
+    my $path = $self->dir;
     opendir (my $posts_dir, $path);
     my @files = grep(/^\d{4}-\d{2}-\d{2}/ ,readdir($posts_dir));
     foreach my $filename (@files) {

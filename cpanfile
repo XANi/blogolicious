@@ -10,6 +10,7 @@ requires 'File::Slurp';
 requires 'Log::Any';
 requires 'Log::Any::Adapter';
 requires 'Log::Any::Adapter::Mojo';
+requires 'Moo';
 requires 'Module::Load';
 requires 'Mojolicious', '>= 4.80';
 requires 'Mojolicious::Plugin::TtRenderer';
