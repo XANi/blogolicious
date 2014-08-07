@@ -35,12 +35,6 @@ has 'summary_tag' => (
     default => sub { '\n\s*-- more --' },
 );
 
-
-sub   BUILD {
-    my $self = shift;
-    print Dumper $self;
-}
-
 sub parse {
     my $self = shift;
     my $data = shift;

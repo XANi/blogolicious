@@ -1,6 +1,9 @@
 package Blogolicious::Backend::Comments::File;
 use common::sense;
 
+use namespace::clean;
+use Moo;
+
 use YAML::XS;
 use File::Slurp qw(read_file);
 use File::Path qw(make_path);
@@ -9,27 +12,17 @@ use URI::Escape;
 use DateTime;
 use Digest::MD5 qw(md5_hex);
 
-sub new {
-    my $proto = shift;
-    my $class = ref($proto) || $proto;
-    my $self = {};
-    bless($self, $class);
 
-    if (ref($_[0]) eq 'ARRAY') {
-        $self->{'config'} = shift;
-    }
-    elsif (ref($_[0]) eq 'HASH') {
-        $self->{'config'} = shift;
-    }
-    else {
-        my %config = @_;
-        $self->{'config'} = \%config;
-    }
-    if (!defined $self->{'config'}{'dir'}) {
-        croak("You need to specify dir");
-    }
-    return $self;
-}
+
+has 'dir' => (
+    is => 'ro',
+    isa => sub {
+        if (!defined($_[0])) {
+            croak("Need file dir!")
+        }
+    },
+);
+
 
 sub add {
     my $self = shift;
@@ -38,7 +31,7 @@ sub add {
     if (!defined( $post ) || $post =~ /^\s*$/) {
         croak("passed post name is invalid or empty");
     }
-    my $dir = $self->{'config'}{'dir'} . '/' . $post;
+    my $dir = $self->dir . '/' . $post;
     my $post_name = $self->_mkname($data);
     if (! -d $dir) {
         make_path($dir) or croak ('Can\'t create dir for post');
@@ -66,7 +59,7 @@ sub load_and_parse {
 sub get_comments {
     my $self = shift;
     my $post = shift;
-    my $path = $self->{'config'}{'dir'} . '/' . $post;
+    my $path = $self->dir . '/' . $post;
     if (! -d $path) {
         return [];
     }
