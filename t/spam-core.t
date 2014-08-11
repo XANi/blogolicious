@@ -14,3 +14,4 @@ $s->add_plugin('Spam',{},1);
 is( $s->rate($data),1, "Ham and spam averaged to moderate");
 $s->add_plugin('Spam',{},10);
 is( $s->rate($data),2, "Spam with higher weight averaged to spam");
+done_testing();
