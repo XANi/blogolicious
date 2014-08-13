@@ -30,7 +30,7 @@ sub startup {
     $cfg = Load($cfg) or croak($!);
 
     # TODO /dev/urandom!!!
-    $self->secrets( $cfg->{'secret'} || rand(1000000000000000) );
+    $self->secrets( $cfg->{'secret'} || [rand(1000000000000000)] );
 
     # make relative paths absolute
     my $homedir = quotemeta($self->home);
