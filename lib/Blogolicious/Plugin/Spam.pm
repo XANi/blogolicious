@@ -72,6 +72,7 @@ sub rate_raw {
 
 sub rate {
     my $self = shift;
+    my $headers = shift;
     my $data = shift;
     my $rating = $self->rate_raw($data);
     if ($rating < $self->moderate_threshold) {

@@ -7,7 +7,13 @@ my $s = Blogolicious::Plugin::Spam->new(
     ham_threshold  => 0.4,
 );
 
-my $data = {};
+my $data = {
+    headers => {
+        user => 'dummy',
+        ip   => '1.2.3.4',
+    },
+    data => "some message",
+};
 $s->add_plugin('Ham',{},1);
 is( $s->rate($data), 0,"Ham plugins return ham");
 $s->add_plugin('Spam',{},1);
