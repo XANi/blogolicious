@@ -149,6 +149,8 @@ blockquote cite{display:block;margin:5px 0 0;}
 #commentform #submit{height:24px; width:60px;margin:0 90px 10px 0;float:right;font-weight:bold;}
 #respond{margin:6px 0 0 10px; color:#CCC;}
 
+#commentresults { margin: 5px;text-align:center;}
+
 .slected {font-size: 12px;background:#262626;border: 1px solid #2F2F2F;color:#CCC;}
 .slected:hover {background: #333;}
 .slected:focus {background: #1B1B1B;}

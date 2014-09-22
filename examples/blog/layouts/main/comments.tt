@@ -20,7 +20,7 @@
 <h3 id="respond">
 Post a reply<br>
 </h3>
-<div id="results"></div>
+<div id="commentresults"></div>
 <form id="commentform">
     <input type="hidden" name="postid" value="[% blogpost %]">
     <p><input type="text" name="author" id="author" class="slected" value="Your name" size="22" tabindex="1" onfocus="if ( value == 'Your name' ) { this.value='' }" onblur="if ( value == '' ) { this.value='Your name' }"></p>
@@ -50,9 +50,9 @@ Post a reply<br>
                 error:  function(xhr){
                     err = $.parseJSON(xhr.responseText);
                     if ("error" in err) {
-                        $("#results").html("Error: " + err["error"]);
+                        $("#commentresults").html("Error: " + err["error"]);
                     } else {
-                        $("#results").html("Server error; try again");
+                        $("#commentresults").html("Server error; try again");
                     }
                 },
             });
