@@ -45,12 +45,18 @@ Post a reply<br>
                 dataType: 'json',
                 data: $(this).serialize(),
                 success:  function(data,status,xhr){
-                    $("#results").html(data.msg);
+                    $("#commentresults").html(data.msg);
+                    $("#commentresults").removeClass("commentfailed");
+                    $("#commentresults").addClass("commentok");
+
                 },
                 error:  function(xhr){
                     err = $.parseJSON(xhr.responseText);
+                    $("#commentresults").removeClass("commentok");
+                    $("#commentresults").addClass("commentfailed");
                     if ("error" in err) {
                         $("#commentresults").html("Error: " + err["error"]);
+
                     } else {
                         $("#commentresults").html("Server error; try again");
                     }

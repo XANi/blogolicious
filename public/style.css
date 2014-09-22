@@ -760,9 +760,18 @@ blockquote cite {
 
 #commentresults {
     margin: 5px;
+    font-weight: bold;
     text-align: center;
 }
 
+.commentok {
+    color: #9999cc;
+    font-weight: bold;
+}
+.commentfailed {
+    color: #ccaa66;
+    font-weight: bold;
+}
 .slected {
     font-size: 12px;
     background: #262626;
