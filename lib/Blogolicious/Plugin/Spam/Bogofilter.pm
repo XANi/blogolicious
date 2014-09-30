@@ -4,12 +4,41 @@ use common::sense;
 use Moo;
 
 use Log::Any;
-
+use IPC::Open3;
 
 sub rate {
     my $self = shift;
-    return 0;
+
+    return;
 }
+
+sub spam {
+    my $self = shift;
+
+    return;
+}
+
+sub ham {
+    my $self = shift;
+
+    return;
+}
+
+sub run_bogofilter {
+    my $self = shift;
+    my $args = shift;
+    my $data = shift;
+    my $pid = open3(my $in_fd, my $out_fd, undef, $self->bogofilter_path, @$args);
+    print $in_fd $data;
+    close $in_fd;
+    my $out;
+    while(<$out_fd>) {$out .= $_ ; print $out}
+    waitpid( $pid, 0 );
+    my $child_exit_status = $? >> 8;
+    chomp ($out);
+    return split(/\s+/,$out,2);
+}
+
 
 has 'bogofilter_path' => (
     is => 'ro',
@@ -18,14 +47,19 @@ has 'bogofilter_path' => (
             croak("$_[0] is not executable")
         }
     },
-    default => sub { `which bogofilter` } # this probably should search path via some clever module...
+    default => sub {
+        # this probably should search path via some clever module...
+        my $bogofilter_bin = `which bogofilter`;
+        chomp $bogofilter_bin;
+        return $bogofilter_bin;
+    }
 );
 
-has 'db_path' => (
+has 'db_dir' => (
     is => 'ro',
 #    isa => sub {};
-    default => sub {'bogofilter.db'},
-)
+    default => sub {'.bogofilter_db'},
+);
 
 sub _format_data {
     my $self = shift;
@@ -45,7 +79,6 @@ sub _format_data {
 
 sub _sanitize_header {
     my $self = shift;
-
     return;
 }
 
