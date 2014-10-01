@@ -12,7 +12,7 @@ my $data = {
         user => 'dummy',
         ip   => '1.2.3.4',
     },
-    data => "some message",
+    data => "some message with ham",
 };
 $s->add_plugin('Ham',{},1);
 is( $s->rate($data), 0,"Ham plugins return ham");

@@ -5,22 +5,34 @@ use Moo;
 
 use Log::Any;
 use IPC::Open3;
-
+use Carp qw(croak);
 sub rate {
-    my $self = shift;
-
-    return;
+     my $self = shift;
+     my $arg = shift;
+     my $data = $self->_format_data($arg);
+     my $args = ['-T', '-d', $self->db_dir ];
+     if ($self->feedback) {
+         push @$args, '-u';
+     }
+     my ($result, $rating) = $self->run_bogofilter($args,$data);
+     return $rating;
 }
 
 sub spam {
     my $self = shift;
-
+    my $arg = shift;
+    my $data = $self->_format_data($arg);
+    my $args = ['-T', '-s', '-d', $self->db_dir ];
+    my ($result, $rating) = $self->run_bogofilter($args,$data);
     return;
 }
 
 sub ham {
     my $self = shift;
-
+    my $arg = shift;
+    my $data = $self->_format_data($arg);
+    my $args = ['-T', '-n', '-d', $self->db_dir ];
+    my ($result, $rating) = $self->run_bogofilter($args,$data);
     return;
 }
 
@@ -28,7 +40,7 @@ sub run_bogofilter {
     my $self = shift;
     my $args = shift;
     my $data = shift;
-    my $pid = open3(my $in_fd, my $out_fd, undef, $self->bogofilter_path, @$args);
+    my $pid = open3(my $in_fd, my $out_fd, undef, $self->bogofilter_path , @$args);
     print $in_fd $data;
     close $in_fd;
     my $out;
@@ -51,6 +63,9 @@ has 'bogofilter_path' => (
         # this probably should search path via some clever module...
         my $bogofilter_bin = `which bogofilter`;
         chomp $bogofilter_bin;
+        if ( ! -x $bogofilter_bin) {
+            croak("Bogofilter bin [$bogofilter_bin] cant be found or not executable");
+        }
         return $bogofilter_bin;
     }
 );
@@ -61,13 +76,18 @@ has 'db_dir' => (
     default => sub {'.bogofilter_db'},
 );
 
+has 'feedback' => (
+    is => 'ro',
+    default => sub {1},
+);
+
 sub _format_data {
     my $self = shift;
     my $data = shift;
     my $out;
     if (defined($data->{'headers'})) {
         while(my ($k, $v) = each( %{ $data->{'headers'} } )) {
-            $out .= $k . ": " . $self->_sanitize_header($v)
+            $out .= $k . ": " . $self->_sanitize_header($v) . "\n";
         }
     }
     $out .= "\n\n";
@@ -79,7 +99,9 @@ sub _format_data {
 
 sub _sanitize_header {
     my $self = shift;
-    return;
+    $_ = shift;
+    s{(\n|\r)}{ }g;
+    return $_;
 }
 
 1;

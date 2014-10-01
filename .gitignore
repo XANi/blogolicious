@@ -39,3 +39,4 @@ cpanfile.snapshot
 
 # random crap
 examples/blog/comments
+.bogofilter_db/

@@ -3,3 +3,5 @@ language: perl
 perl:
   - "5.14"
   - "5.18"
+before_install:
+  - sudo apt-get install -qq bogofilter
