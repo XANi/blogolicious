@@ -1,6 +1,0 @@
-
-57: sub _format_data {
-    ^                 
-found sub where operator expected
-
-Missing ';' above?
