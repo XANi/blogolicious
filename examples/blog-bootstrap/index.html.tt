@@ -1,0 +1,40 @@
+[% IF error %] <div class="alert alert-error"> [%= error %] </div>[% END %]
+
+<h1 class="page-header">
+    Page Heading
+    <small>Secondary Text</small>
+</h1>
+
+<!-- First Blog Post -->
+[% FOREACH post IN posts %]
+<h2>
+    <a href="/blog/post/[% post.id %]">[% post.title %]</a>
+</h2>
+<p class="lead">
+    by <a href="/">[% post.author %]</a>
+</p>
+<p><span class="glyphicon glyphicon-time"></span> Posted on [% post.date %]</p>
+<hr>
+    <img class="img-responsive" src="http://placehold.it/900x200" alt="">
+        <hr>
+            <p>[% post.summary %]</p>
+            <a class="btn btn-primary" href="#">Read More <span class="glyphicon glyphicon-chevron-right"></span></a>
+
+            <hr>
+                [% END %]
+
+                <!-- Pager -->
+                <ul class="pager">
+                    [% IF has_older %]
+                    <li class="previous">
+                        <a href="/blog/page/[% page + 1 %]">&larr; Older</a>
+                    </li>
+                    [% END %]
+                    [% IF has_newer %]
+                    <li class="next">
+                        <a href="/blog/page/[% page - 1 %]">Newer &rarr;</a>
+                    </li>
+                    [% END %]
+                </ul>
+
+</div>

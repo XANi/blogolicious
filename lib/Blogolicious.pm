@@ -53,6 +53,7 @@ sub startup {
         $self->defaults(debug => 1);
     }
 
+
     $self->plugin(
         tt_renderer => {
             template_options => {
