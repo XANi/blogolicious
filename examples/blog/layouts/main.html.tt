@@ -6,15 +6,18 @@
 <meta name="generator" content="Blogolicious" />
 <meta name="keywords" content="[% # FIXME %]" />
 <meta name="description" content="[% # FIXME %]" />
-<link rel="stylesheet" type="text/css" media="screen" href="/style.css" />
 <link rel="alternate" type="application/atom+xml" title="Atom" href="/blog/feed" />
-<script type="text/javascript" src="/static/js/jquery-1.8.2.min.js"></script>
+
+<link rel="stylesheet" type="text/css" media="screen" href="/css/style.css" />
+<script type="text/javascript" src="/js/jquery.js"></script>
 [%- # fixme more feed formats -%]
 [%- #<!-- <link rel="pingback" href=" # fixme pingback plugin" /> --> %]
 </head>
 <body>
 <div id="page">
-    <div id="container">
+    <!--<div id="container">-->
+    <div class="row">
+    <div class="col-lg-12">
 <!-- header [% layout %] -->
 [% INCLUDE "layouts/$layout/header.tt" %]
 <!-- content -->
@@ -23,6 +26,7 @@
 [% INCLUDE "layouts/$layout/sidebar.tt" %]
 <!-- footer -->
 [% INCLUDE "layouts/$layout/footer.tt" %]
+    </div>
     </div>
 </div>
 </body>

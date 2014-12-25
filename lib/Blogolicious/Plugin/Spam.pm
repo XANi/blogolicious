@@ -29,12 +29,24 @@ has 'moderate_threshold' => (
     default => sub { 0.5 },
 );
 
+has 'plugins' => (
+    is => 'ro',
+    isa => sub {},
+    default => sub{ {plugin => 'ham', config => {}, weight => 1 }},
+);
+
+sub BUILD {
+    my $self = shift;
+    for my $plugin( @{ $self->plugins } ) {
+        $self->add_plugin($plugin->{'plugin'},$plugin->{'config'},$plugin->{'weight'});
+    }
+}
 
 
 
 sub add_plugin {
     my $self = shift;
-    my $plugin = shift;
+    my $plugin = ucfirst(shift);
     my $config = shift;
     my $weight = shift;
     $weight ||= 0;
