@@ -13,7 +13,15 @@
 <p class="lead">
     by <a href="/">[% post.author %]</a>
 </p>
-<p><span class="glyphicon glyphicon-time"></span> Posted on [% post.date %]</p>
+<p>
+    <span class="glyphicon glyphicon-time"></span> 
+    Posted on [% post.date %]
+    [% IF post.tag %]
+    [% FOREACH t IN post.tag %]
+    <span class="badge">[% t %]</span>
+   [% END %]
+   [% END %]
+</p>
 <hr>
     <img class="img-responsive" src="http://placehold.it/900x200" alt="">
         <hr>

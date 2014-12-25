@@ -37,8 +37,10 @@ has 'plugins' => (
 
 sub BUILD {
     my $self = shift;
-    for my $plugin( @{ $self->plugins } ) {
-        $self->add_plugin($plugin->{'plugin'},$plugin->{'config'},$plugin->{'weight'});
+    if (ref($self->plugins) eq 'ARRAY') {
+        for my $plugin( @{ $self->plugins } ) {
+            $self->add_plugin($plugin->{'plugin'},$plugin->{'config'},$plugin->{'weight'});
+        }
     }
 }
 
