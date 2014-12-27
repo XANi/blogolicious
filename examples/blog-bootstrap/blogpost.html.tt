@@ -8,6 +8,11 @@
 <p><span class="glyphicon glyphicon-time"></span> 
      Posted on [% post.date %] 
      [% IF post.category %] under [% post.category.join(', ') %][% END %]
+     [% IF post.tag %]
+    [% FOREACH t IN post.tag %]
+    <span class="badge">[% t %]</span>
+   [% END %]
+   [% END %]
 </p>
 
 <hr>

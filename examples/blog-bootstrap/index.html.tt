@@ -17,8 +17,11 @@
     <span class="glyphicon glyphicon-time"></span> 
     Posted on [% post.date %]
     [% IF post.tag %]
+    <br>
     [% FOREACH t IN post.tag %]
+    <a href="/blog/tag/[% t %]">
     <span class="badge">[% t %]</span>
+    </a>
    [% END %]
    [% END %]
 </p>
