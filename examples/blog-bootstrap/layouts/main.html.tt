@@ -10,6 +10,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
+    <!-- jQuery -->
+    <script src="/js/jquery.js"></script>
 
     <title>[% title %]</title>
 
@@ -65,11 +67,12 @@
     </div>
     <!-- /.container -->
 
-    <!-- jQuery -->
-    <script src="/js/jquery.js"></script>
 
     <!-- Bootstrap Core JavaScript -->
     <script src="/js/bootstrap.js"></script>
+
+    <!-- http://imsky.github.io/holder/ -->
+    <script src="/js/holder.js"></script>
 
 </body>
 

@@ -12,7 +12,7 @@
 
 <hr>
 <!-- Preview Image -->
-<img class="img-responsive" src="http://placehold.it/900x200" alt="">
+<img class="img-responsive" data-src="holder.js/100%x200/sky" alt="">
 <hr>
 [% content %]
 <hr>

@@ -1,8 +1,8 @@
 [% IF error %] <div class="alert alert-error"> [%= error %] </div>[% END %]
 
 <h1 class="page-header">
-    Page Heading
-    <small>Secondary Text</small>
+    [% c.config.title %]
+    <small>[% c.config.description %]</small>
 </h1>
 
 <!-- First Blog Post -->
@@ -23,7 +23,7 @@
    [% END %]
 </p>
 <hr>
-    <img class="img-responsive" src="http://placehold.it/900x200" alt="">
+        <img class="img-responsive" data-src="holder.js/100%x60/sky" alt="">
         <hr>
             <p>[% post.summary %]</p>
             <a class="btn btn-primary" href="#">Read More <span class="glyphicon glyphicon-chevron-right"></span></a>
@@ -45,4 +45,3 @@
                     [% END %]
                 </ul>
 
-</div>
