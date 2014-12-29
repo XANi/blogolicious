@@ -72,6 +72,7 @@ sub new_comment {
         $self->render( json => {'error'=> "no post with that name exists"}, status => 500);
     }
     my $t = DateTime->now;
+    my $needs_moderation=0;
     my $new_comment = $self->app->{'backend'}{'comments'}->add(
         $self->param('postid'),
         {
@@ -83,10 +84,22 @@ sub new_comment {
             content => $self->param('comment'),
         }
     );
-    if ($new_comment) {
+    if ($new_comment && !$needs_moderation) {
         $self->render(
-            json => json => {'msg' => "Comment added!"},
+            json => json => {
+                msg    => "Comment added!", 
+                status => 0
+            },
             text => "Comment added!"
+        );
+    }
+    elsif ($needs_moderation) {
+        $self->render(
+            json => json =>{
+                'msg' => "Comment waiting for moderation.",
+                'status' => 1,
+            },
+            text => "Comment waiting for moderation",
         );
     }
     else {

@@ -1,0 +1,24 @@
+<!-- Blog Post -->
+
+<h1>[% post.title %]</h1>
+<p class="lead">
+    by <a href="#">[% post.author %]</a>
+</p>
+<hr>
+<p><span class="glyphicon glyphicon-time"></span> 
+     Posted on [% post.date %] 
+     [% IF post.category %] under [% post.category.join(', ') %][% END %]
+     [% IF post.tag %]
+    [% FOREACH t IN post.tag %]
+    <span class="badge">[% t %]</span>
+   [% END %]
+   [% END %]
+</p>
+
+<hr>
+<!-- Preview Image -->
+<img class="img-responsive" data-src="holder.js/100%x200/sky" alt="">
+<hr>
+[% content %]
+<hr>
+[% INCLUDE "layouts/$layout/comments.tt" %]

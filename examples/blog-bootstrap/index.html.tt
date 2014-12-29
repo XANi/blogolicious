@@ -1,0 +1,50 @@
+[% IF error %] <div class="alert alert-error"> [%= error %] </div>[% END %]
+
+<h1 class="page-header">
+    [% c.config.title %]
+    <small>[% c.config.description %]</small>
+</h1>
+
+<!-- First Blog Post -->
+[% FOREACH post IN posts %]
+<h2>
+    <a href="/blog/post/[% post.id %]">[% post.title %]</a>
+</h2>
+<p class="lead">
+    by <a href="/">[% post.author %]</a>
+</p>
+<p>
+    <span class="glyphicon glyphicon-time"></span> 
+    Posted on [% post.date %]
+    [% IF post.tag %]
+    <br>
+    [% FOREACH t IN post.tag %]
+    <a href="/blog/tag/[% t %]">
+    <span class="badge">[% t %]</span>
+    </a>
+   [% END %]
+   [% END %]
+</p>
+<hr>
+        <img class="img-responsive" data-src="holder.js/100%x60/sky" alt="">
+        <hr>
+            <p>[% post.summary %]</p>
+            <a class="btn btn-primary" href="#">Read More <span class="glyphicon glyphicon-chevron-right"></span></a>
+
+            <hr>
+                [% END %]
+
+                <!-- Pager -->
+                <ul class="pager">
+                    [% IF has_older %]
+                    <li class="previous">
+                        <a href="/blog/page/[% page + 1 %]">&larr; Older</a>
+                    </li>
+                    [% END %]
+                    [% IF has_newer %]
+                    <li class="next">
+                        <a href="/blog/page/[% page - 1 %]">Newer &rarr;</a>
+                    </li>
+                    [% END %]
+                </ul>
+

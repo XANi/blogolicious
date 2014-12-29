@@ -45,10 +45,7 @@ Post a reply<br>
                 dataType: 'json',
                 data: $(this).serialize(),
                 success:  function(data,status,xhr){
-                    $("#commentresults").html(data.msg);
-                    $("#commentresults").removeClass("commentfailed");
-                    $("#commentresults").addClass("commentok");
-
+                    $("#commentresults").html('<div class="alert alert-success">' + data.msg + '</div>');
                 },
                 error:  function(xhr){
                     err = $.parseJSON(xhr.responseText);

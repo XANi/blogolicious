@@ -53,6 +53,7 @@ sub startup {
         $self->defaults(debug => 1);
     }
 
+
     $self->plugin(
         tt_renderer => {
             template_options => {
@@ -78,6 +79,7 @@ sub startup {
     $self->{'backend'}{'content'} = sub {
         markdown(shift);
     };
+    $self->static->paths($cfg->{'static_paths'} || [ $cfg->{'repo_dir'} . '/public' ]);
     my $posts_backend = 'Blogolicious::Backend::Posts::' .  ucfirst($cfg->{'backends'}{'posts'}{'module'} || 'File');
     load $posts_backend;
     $self->{'backend'}{'posts'} = $posts_backend->new(

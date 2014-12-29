@@ -1,0 +1,50 @@
+
+                <!-- Blog Search Well -->
+                <div class="well">
+                    <h4>Blog Search</h4>
+                    <div class="input-group">
+                        <input type="text" class="form-control">
+                        <span class="input-group-btn">
+                            <button class="btn btn-default" type="button">
+                                <span class="glyphicon glyphicon-search"></span>
+                        </button>
+                        </span>
+                    </div>
+                    <!-- /.input-group -->
+                </div>
+
+                <!-- Blog Categories Well -->
+                <div class="well">
+                    <h4>Blog Categories</h4>
+                    <div class="row">
+                        <ul class="list-group">
+
+                        [% FOREACH category IN blog.categories.keys -%]
+                        <li class="list-group-item">
+                            <a href="/blog/category/[% category %]"> 
+                                    [% category %] ([% blog.categories.$category.count %])
+                            </a>
+                        </li> 
+                        [%- END %]
+                        </ul>
+                    </div>
+                    <!-- /.row -->
+                </div>
+                <div class="well" >
+                    [% FOREACH tag IN blog.tags.keys %]
+                    <a href="/blog/tag/[% tag %]">
+                        <button type="button" class="btn btn-default"> 
+                            [% tag %]
+                        </button>
+                    </a>  
+                    [% END %]
+                </div>
+
+
+
+                <!-- Side Widget Well -->
+                <div class="well">
+                    <h4>Side Widget Well</h4>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Inventore, perspiciatis adipisci accusamus laudantium odit aliquam repellat tempore quos aspernatur vero.</p>
+                </div>
+ 
