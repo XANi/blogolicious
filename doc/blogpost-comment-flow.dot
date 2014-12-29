@@ -1,0 +1,20 @@
+digraph {
+    request [label="Request"];
+    blogpost [label="Blogolicious::Blogpost"];
+    spam_filter [label="Blogolicious::Plugin::Spam"]
+    entry_backend [label="Blogolicious::Backend::Articles::XX"];
+    renderer [label="Blogolicious::Backend::Parser::XX"];
+    comment_backend_add [label="Blogolicious::Backend::Comments::XX->add"];
+    comment_backend_get [label="Blogolicious::Backend::Comments::XX->get*"];
+    request ->  blogpost [label="GET", fontcolor="#0000FF", color="#0000FF"];
+    request ->  blogpost [label="POST", fontcolor="#FF0000", color="#FF0000"];
+    blogpost -> entry_backend -> renderer [color="#0000FF"];
+    blogpost -> comment_backend_add -> entry_backend -> renderer [color="#ff0000"];
+
+    entry_backend -> comment_backend_get;
+    comment_backend_get -> entry_backend;
+
+    spam_filter -> comment_backend_add;
+    comment_backend_add -> spam_filter;
+
+}
