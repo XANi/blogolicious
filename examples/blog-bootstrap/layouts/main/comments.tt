@@ -26,6 +26,7 @@
         <button type="submit" class="btn btn-primary" id="submit">Submit</button>
     </form>
 </div>
+<div id="comment-msg"></div>
 
 
 <script type="text/javascript">
@@ -40,17 +41,18 @@
                 dataType: 'json',
                 data: $('form.commentform').serialize(),
                 success:  function(data,status,xhr){
-                    $("#commentresults").html('<div class="alert alert-success">' + data.msg + '</div>');
+                    $("#comment-msg").addClass("alert alert-success");
+                    $("#comment-msg").html(data.msg);
                 },
                 error:  function(xhr){
                     err = $.parseJSON(xhr.responseText);
-                    $("#commentresults").removeClass("commentok");
-                    $("#commentresults").addClass("commentfailed");
+                    $("#comment-msg").removeClass("commentok");
+                    $("#comment-msg").addClass("alert alert-danger");
                     if ("error" in err) {
-                        $("#commentresults").html("Error: " + err["error"]);
+                        $("#comment-msg").html("Error: " + err["error"]);
 
                     } else {
-                        $("#commentresults").html("Server error; try again");
+                        $("#comment-msg").html("Server error; try again");
                     }
                 },
             });
