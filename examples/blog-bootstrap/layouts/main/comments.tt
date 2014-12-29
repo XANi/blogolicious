@@ -32,6 +32,9 @@
 <script type="text/javascript">
     $(function() {
         $("button#submit").click( function () {
+            $("#comment-msg").removeClass();
+            $("#comment-msg").addClass("alert alert-info");
+            $("#comment-msg").html("Sending comment...");
             $.ajax({
                 type: "POST",
                 url: '/blog/comments/new',
@@ -41,10 +44,17 @@
                 dataType: 'json',
                 data: $('form.commentform').serialize(),
                 success:  function(data,status,xhr){
-                    $("#comment-msg").addClass("alert alert-success");
-                    $("#comment-msg").html(data.msg);
+                        $("#comment-msg").removeClass();
+                    if (data.status == 0) {
+                        $("#comment-msg").addClass("alert alert-success");
+                        $("#comment-msg").html("Comment added!");
+                    } else if (data.status == 1) {
+                        $("#comment-msg").addClass("alert alert-warning");
+                        $("#comment-msg").html("Comment waiting for moderation");
+                    }
                 },
                 error:  function(xhr){
+                    $("#comment-msg").removeClass();
                     err = $.parseJSON(xhr.responseText);
                     $("#comment-msg").removeClass("commentok");
                     $("#comment-msg").addClass("alert alert-danger");
