@@ -13,5 +13,5 @@ Targets:
 
 Doc index:
 
-* [API](doc/API.pm)
+* [API](doc/API.md)
 
