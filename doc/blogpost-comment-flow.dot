@@ -4,8 +4,8 @@ digraph {
     spam_filter [label="Blogolicious::Plugin::Spam"]
     entry_backend [label="Blogolicious::Backend::Articles::XX"];
     renderer [label="Blogolicious::Backend::Parser::XX"];
-    comment_backend_add [label="Blogolicious::Backend::Comments::XX->add"];
-    comment_backend_get [label="Blogolicious::Backend::Comments::XX->get*"];
+    comment_backend_add [label="Blogolicious::Backend::Comments->add"];
+    comment_backend_get [label="Blogolicious::Backend::Comments->get*"];
     request ->  blogpost [label="GET", fontcolor="#0000FF", color="#0000FF"];
     request ->  blogpost [label="POST", fontcolor="#FF0000", color="#FF0000"];
     blogpost -> entry_backend -> renderer [color="#0000FF"];

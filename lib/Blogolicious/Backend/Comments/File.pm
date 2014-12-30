@@ -23,7 +23,6 @@ has 'dir' => (
     },
 );
 
-
 sub add {
     my $self = shift;
     my $post = shift;
