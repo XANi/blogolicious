@@ -6,4 +6,4 @@ if [ ! -e cpanfile.snapshot ]; then
     echo "No cpanfile.snapshot found, running install"
     ./build.sh
 fi
-carton exec morbo script/blogolicious
+carton exec -- morbo script/blogolicious $@
