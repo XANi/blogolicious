@@ -6,9 +6,13 @@ secret: ~
 
 tmp_dir:  tmp
 repo_dir: examples/blog-bootstrap
+# dir for comments that were marked for moderation.
+# new posts will be put in "mod" and you shoudl move moderated ones to ham/spam dirs
+# defailts to $repo_dir/mod
+moderation_dir:
 # can be more than one, in order of priority
 # defaults to repo_dir/public
-#static_paths: 
+#static_paths:
 #    - examples/blog/public
 base_url: http://127.0.0.1:3000
 rss_item_count: 30
@@ -34,10 +38,9 @@ plugins:
               weight: 1
             - plugin: random
               weight: 1
-        
+
 
 
       # if you want to put it into production with hypnotoad, 2 x num_of_cores is good starting point
 hypnotoad:
     workers: 8
-

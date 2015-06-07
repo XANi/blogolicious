@@ -90,6 +90,7 @@ sub startup {
     load $comments_backend;
     $self->{'backend'}{'comments'} = $comments_backend->new(
         dir => $cfg->{'repo_dir'} . '/comments',
+        mod_dir => $cfg->{'moderation_dir'} || $cfg->{'repo_dir'} . '/mod',
         renderer => $self->{'backend'}{'content'},
     );
     # TODO move refresher to backend module

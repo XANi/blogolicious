@@ -11,7 +11,7 @@ use Data::Dumper;
 use Digest::MD5;
 
 our $validate = {
-    author => qr/^[0-9a-zA-Z\-_\ ]+$/,
+    author => qr/^\p{XPosixAlnum}+$/,
     email => qr/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,
     postid => qr/^[0-9a-zA-Z\-_]+$/i,
     comment => qr/.*/i,

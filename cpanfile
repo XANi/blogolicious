@@ -1,6 +1,7 @@
 # build and stuff
 requires 'ExtUtils::MakeMaker::CPANfile';
 requires 'Test::More';
+requires 'Test::Exception';
 requires 'TAP::Formatter::JUnit';
 
 # app

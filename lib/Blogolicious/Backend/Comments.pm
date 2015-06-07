@@ -25,7 +25,7 @@ has 'backend' => (
 has 'moderate_if_unsure' => (
     is => 'ro',
     isa => sub {
-        if ($_[0] < 0 || $_[0] > 1) {    
+        if ($_[0] < 0 || $_[0] > 1) {
             croak("moderate if unsure needs 0 or 1");
        }
     },
@@ -34,8 +34,8 @@ has 'moderate_if_unsure' => (
 
 has 'anonymize_email' => (
     is => 'ro',
-    isa => sub [
-        if ($_[0] < 0 || $_[0] > 1) {    
+    isa => sub {
+        if ($_[0] < 0 || $_[0] > 1) {
             croak("anonymize_email needs 0 or 1");
        }
     },
@@ -115,9 +115,9 @@ send email to moderation of spam filter results is "unsure". Defaults to 1
 
     $c->add(
         "My_new_blog",
- 
+
     )
-        
+
 Validate->spamfilter->add blogpost
 
 returns hash with status of chain, or undef if something (Backend dead etc.) critically failed
