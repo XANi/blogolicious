@@ -84,10 +84,16 @@ sub new_comment {
             content => $self->param('comment'),
         }
     );
+    # TODO move common stuff to some some common object
+    $self->app->sessions->default_expiration(86400 * 60);
+    $self->session->{'author'} = $self->param('author');
+    $self->session->{'email'}  = $self->param('email');
+    $self->session->{'url'}    = $self->param('url');
+
     if ($new_comment && !$needs_moderation) {
         $self->render(
             json => json => {
-                msg    => "Comment added!", 
+                msg    => "Comment added!",
                 status => 0
             },
             text => "Comment added!"

@@ -8,17 +8,17 @@
             <span class="input-group-addon">
              <span class="glyphicon glyphicon-user"></span>
             </span>
-            <input type="text" class="form-control" placeholder="Name" name="author">
+            <input type="text" class="form-control" placeholder="Name" value="[% c.session('author') %]" name="author">
         </div>
         <div class="input-group">
             <span class="input-group-addon">@</span>
-            <input type="text" class="form-control" placeholder="E-mail" name="email">
+            <input type="text" class="form-control" placeholder="E-mail" value="[% c.session('email') %]"  name="email">
         </div>
         <div class="input-group">
             <span class="input-group-addon">
                 <span class="glyphicon glyphicon-cloud"></span>
             </span>
-            <input type="text" class="form-control" placeholder="Website" name="url">
+            <input type="text" class="form-control" placeholder="Website"  value="[% c.session('url') %]"  name="url">
         </div>
         <div class="form-group">
             <textarea class="form-control" rows="5" name=comment></textarea>
