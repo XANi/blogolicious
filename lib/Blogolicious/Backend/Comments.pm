@@ -12,6 +12,7 @@ use URI::Escape;
 use DateTime;
 use Digest::MD5 qw(md5_hex);
 
+use Blogolicious::Comment;
 
 has 'backend' => (
     is => 'ro',
@@ -54,7 +55,7 @@ has 'spam_filter' => (
 
 sub BUILD {
     my $self = shift;
-    $self->{back
+#    $self->{back
 }
 
 __END__
