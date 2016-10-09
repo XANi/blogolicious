@@ -45,7 +45,8 @@ sub parse {
     # TODO handle fail condition instead of ignoring
     eval {
         $meta = Load($raw_meta);
-        ($meta->{'summary'},$tmp) = split(/$self->summary_tag/, $body,2);
+        my $summary_tag_re = $self->summary_tag;
+        ($meta->{'summary'},$tmp) = split(/$summary_tag_re/, $body,2);
         if (defined($tmp) && $tmp !~ /^\s*$/) {
             $meta->{'has_more'} = 1;
         }
@@ -65,7 +66,7 @@ sub parse {
     if ( defined( $opts{'filename'} ) ) {
         $meta->{'filename'} = $opts{'filename'};
         $meta->{'id'} = $meta->{'filename'};
-        ($meta->{'date'}) = $opts{'filename'} =~ m/(\d{4}\-\d{2}\-\d{2})/;
+        ($meta->{'date'}) = $opts{'filename'} =~ m/(\d{4}\-\d{2}\-\d{2})/; # FIXME save in parseable format like unixtime
     }
     return ($meta, $body);
 };
