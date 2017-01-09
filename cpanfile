@@ -14,7 +14,7 @@ requires 'Log::Any';
 requires 'Log::Any::Adapter';
 requires 'Log::Any::Adapter::Mojo';
 requires 'Module::Load';
-requires 'Mojolicious', '>= 4.80';
+requires 'Mojolicious', '>= 4.80, < 7.0';
 requires 'Mojolicious::Plugin::TtRenderer';
 requires 'Moo';
 requires 'Text::Markdown::Discount';
