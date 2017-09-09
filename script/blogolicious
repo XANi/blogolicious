@@ -1,6 +1,8 @@
 #!/usr/bin/env perl
-use lib '../lib';
-
+#use lib '../lib';
+#use lib '../';
+use FindBin;                 # locate this script
+use lib "$FindBin::Bin/..";  # use the parent directory
 use Mojo::Base -strict;
 
 use File::Basename 'dirname';
