@@ -1,7 +1,6 @@
 package Blogolicious;
 use Mojo::Base 'Mojolicious';
-use EV;
-use AnyEvent;
+use Mojo::IOLoop;
 use YAML::XS;
 use File::Slurp qw(read_file);
 use File::Path qw (mkpath);
@@ -95,10 +94,8 @@ sub startup {
     );
     # TODO move refresher to backend module
     # TODO that should be triggered by inotify
-    $self->{'events'}{'post_update'} = AnyEvent->timer (
-        after    => 60,
-        interval => 60,
-        cb       => sub {
+    $self->{'events'}{'post_update'} = Mojo::IOLoop->recurring (
+        60 => sub {
             $log->info("Updating posts");
             $self->{'backend'}{'posts'}->update_post_list;
             $self->{'cache'}{'posts'} = $self->{'backend'}{'posts'}->get_sorted_post_list();

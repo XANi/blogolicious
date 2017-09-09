@@ -5,7 +5,6 @@ requires 'Test::Exception';
 requires 'TAP::Formatter::JUnit';
 
 # app
-requires 'AnyEvent';
 requires 'DateTime';
 requires 'EV';
 requires 'File::Slurp';
