@@ -1,5 +1,5 @@
 <div id="content">
-    
+
     [% IF error %]<h1>[%= error %]</h2>[% END %]
     [% FOREACH post IN posts %]
     <div class="post" id="post-id">
@@ -13,6 +13,9 @@
             [% post.summary %]
             [% IF post.tags %]
             Tags: [% post.tags.join(', ') %]
+            [% END %]
+            [% IF post.has_more %]
+            <br><a href="/blog/post/[% post.id %]">Read More</a></br>
             [% END %]
         </div>
     </div>

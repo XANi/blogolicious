@@ -14,7 +14,7 @@
     by <a href="/">[% post.author %]</a>
 </p>
 <p>
-    <span class="glyphicon glyphicon-time"></span> 
+    <span class="glyphicon glyphicon-time"></span>
     Posted on [% post.date %]
     [% IF post.tag %]
     <br>
@@ -29,8 +29,9 @@
         <img class="img-responsive" data-src="holder.js/100%x60/sky" alt="">
         <hr>
             <p>[% post.summary %]</p>
+            [% IF post.has_more %]
             <a class="btn btn-primary" href="#">Read More <span class="glyphicon glyphicon-chevron-right"></span></a>
-
+            [% END %]
             <hr>
                 [% END %]
 
@@ -47,4 +48,3 @@
                     </li>
                     [% END %]
                 </ul>
-

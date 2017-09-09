@@ -37,7 +37,7 @@ sub startup {
         $cfg->{'tmp_dir'},
         $cfg->{'repo_dir'},
     ) {
-        s{^/}{$homedir};
+        s{^[^/]}{$homedir};
     }
 
     # defaults
@@ -60,7 +60,7 @@ sub startup {
                 COMPILE_DIR => $cfg->{'tmp_dir'} . '/tt_cache',
                 COMPILE_EXT => '.ttc',
                 EVAL_PERL => 0,
-#                CACHE_SIZE =>0, # 0 means no cache
+                CACHE_SIZE =>0, # 0 means no cache
   #              STAT_TTL => 3600,
             }
         }

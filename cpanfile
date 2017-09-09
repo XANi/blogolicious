@@ -12,6 +12,7 @@ requires 'File::Slurp';
 requires 'Log::Any';
 requires 'Log::Any::Adapter';
 requires 'Log::Any::Adapter::Mojo';
+requires 'Module::Install';
 requires 'Module::Load';
 requires 'Mojolicious', '>= 7.0, < 8.0';
 requires 'Mojolicious::Plugin::TtRenderer';

@@ -91,12 +91,12 @@ sub new_comment {
     $self->session->{'url'}    = $self->param('url');
 
     if ($new_comment && !$needs_moderation) {
-        $self->render(
-            json => json => {
+        $self->respond_to(
+            json => {json => {
                 msg    => "Comment added!",
                 status => 0
-            },
-            text => "Comment added!"
+            }},
+            any => {template => 'hello', message => 'world'"Comment added!"},
         );
     }
     elsif ($needs_moderation) {
